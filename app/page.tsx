@@ -69,21 +69,30 @@ export default function Home() {
         <div className="confetti confetti-a" />
         <div className="confetti confetti-b" />
         <div className="announcement">
-          <div className="mini-megaphone" aria-hidden="true"><span /></div>
+          <div className="mini-megaphone" aria-hidden="true">
+            <i className="mega-cone" />
+            <i className="mega-rim" />
+            <i className="mega-handle" />
+            <i className="mega-shine" />
+          </div>
           <div>
             <p>MESSAGES IS NOW LIVE!</p>
             <span>Go chat with your friends now!</span>
           </div>
-          <div className="live-bubble" aria-hidden="true"><i /><i /><i /><b>LIVE</b></div>
+          <div className="live-bubble" aria-hidden="true">
+            <span className="live-tail" />
+            <span className="live-dots"><i /><i /><i /></span>
+            <b>LIVE</b>
+          </div>
         </div>
 
         <div className="hero-art" aria-hidden="true">
-          <div className="chat chat-purple"><i /><i /><span>♥</span></div>
+          <div className="chat chat-purple"><i /><i /><span className="heart-badge">♥</span></div>
           <div className="orbit orbit-one" />
           <div className="orbit orbit-two" />
           <div className="chat chat-yellow"><i /><i /><i /></div>
-          <div className="puzzle puzzle-left">+</div>
-          <div className="puzzle puzzle-right">+</div>
+          <div className="puzzle puzzle-left"><span>+</span></div>
+          <div className="puzzle puzzle-right"><span>+</span></div>
         </div>
 
         <div className="hero-copy">
