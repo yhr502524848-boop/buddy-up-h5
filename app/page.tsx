@@ -108,7 +108,6 @@ export default function Home() {
       <div id="content" className="event-shell">
         <section className="intro candy-card" aria-labelledby="intro-title">
           <div className="section-copy">
-            <p className="eyebrow">活动介绍</p>
             <h2 id="intro-title">What is <span>Buddy Up?</span></h2>
             <p>Create a two-player game, invite your buddy via Messages, then play together to match—or see how well you match.</p>
           </div>
