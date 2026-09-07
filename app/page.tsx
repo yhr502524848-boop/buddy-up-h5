@@ -398,21 +398,26 @@ export default function Home() {
         <div className="confetti confetti-a" />
         <div className="confetti confetti-b" />
         <div className="announcement">
-          <div className="mini-megaphone" aria-hidden="true">
-            <i className="mega-cone" />
-            <i className="mega-rim" />
-            <i className="mega-handle" />
-            <i className="mega-shine" />
-          </div>
-          <div>
+          <img
+            className="announcement-art announcement-megaphone"
+            src="/buddy-megaphone-refined.png"
+            width={1536}
+            height={1024}
+            alt=""
+            aria-hidden="true"
+          />
+          <div className="announcement-copy">
             <p>MESSAGES IS NOW LIVE!</p>
             <span>Go chat with your friends now!</span>
           </div>
-          <div className="live-bubble" aria-hidden="true">
-            <span className="live-tail" />
-            <span className="live-dots"><i /><i /><i /></span>
-            <b>LIVE</b>
-          </div>
+          <img
+            className="announcement-art announcement-live"
+            src="/buddy-live-chat-refined.png"
+            width={1536}
+            height={1024}
+            alt=""
+            aria-hidden="true"
+          />
         </div>
 
         <div className="hero-copy">
