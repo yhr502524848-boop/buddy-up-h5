@@ -86,16 +86,15 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-art" aria-hidden="true">
-          <div className="chat chat-purple"><i /><i /><span className="heart-badge">♥</span></div>
-          <div className="orbit orbit-one" />
-          <div className="orbit orbit-two" />
-          <div className="chat chat-yellow"><i /><i /><i /></div>
-          <div className="puzzle puzzle-left"><span>+</span></div>
-          <div className="puzzle puzzle-right"><span>+</span></div>
-        </div>
-
         <div className="hero-copy">
+          <img
+            className="hero-main-art"
+            src="/buddy-up-hero-chat.png"
+            width={1330}
+            height={758}
+            alt=""
+            aria-hidden="true"
+          />
           <h1 id="hero-title"><span>BUDDY</span><strong>UP!</strong></h1>
           <p>Make a game. Pick a buddy.<br />Play together.</p>
           <time dateTime="2026-09-11/2026-09-25">SEP.11 — SEP.25</time>

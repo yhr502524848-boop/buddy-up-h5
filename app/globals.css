@@ -368,6 +368,14 @@ button { color: inherit; font: inherit; }
 .puzzle-left { left: 4%; top: 44%; background: linear-gradient(145deg, #ffeb43, var(--yellow)); }
 .puzzle-right { right: 5%; top: 48%; background: linear-gradient(145deg, var(--purple-hi), var(--purple)); transform: rotate(8deg); }
 
+.hero-main-art {
+  display: block;
+  width: clamp(300px, 48vw, 580px);
+  height: auto;
+  margin: -18px auto -12px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 0 rgba(75,23,111,.16));
+}
 .hero-copy {
   position: relative;
   z-index: 2;
@@ -945,6 +953,11 @@ button { color: inherit; font: inherit; }
   .hero-copy {
     min-height: calc(100svh - 104px);
     padding-top: 40px;
+  }
+  .hero-main-art {
+    width: min(90vw, 360px);
+    margin: -8px auto -6px;
+    filter: drop-shadow(0 5px 0 rgba(75,23,111,.14));
   }
   .hero-copy h1 {
     font-size: clamp(66px, 18vw, 78px);
