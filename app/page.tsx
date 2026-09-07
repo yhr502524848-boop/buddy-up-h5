@@ -35,14 +35,6 @@ const steps = [
   { number: '3', title: 'Play', text: 'Play together and see your match', mark: '♥', tone: 'coral' },
 ];
 
-const templates = [
-  { label: 'Swipe: Like or Dislike', mark: '↔', tone: 'lavender' },
-  { label: 'Hot or Not', mark: 'HOT', tone: 'coral' },
-  { label: 'Yes or No', mark: 'YES / NO', tone: 'mint' },
-  { label: 'Pick Your Winner', mark: '1ST', tone: 'purple' },
-  { label: 'Slap or Hug', mark: 'HI 5', tone: 'orange' },
-];
-
 function ChatBubble({ color, className = '' }: { color: string; className?: string }) {
   return (
     <span className={`tiny-chat ${className}`} style={{ background: color }} aria-hidden="true">
@@ -52,7 +44,6 @@ function ChatBubble({ color, className = '' }: { color: string; className?: stri
 }
 
 export default function Home() {
-  const [selectedTemplate, setSelectedTemplate] = useState(0);
   const [joined, setJoined] = useState(false);
 
   const join = () => {
@@ -160,24 +151,13 @@ export default function Home() {
 
         <section id="templates" className="templates candy-card" aria-labelledby="templates-title">
           <div className="ribbon mint-ribbon wide-ribbon"><h2 id="templates-title">Start With a Template</h2></div>
-          <p className="template-hint">Choose a template to start your two-player game.</p>
-          <div className="template-grid" role="list">
-            {templates.map((template, index) => (
-              <button
-                key={template.label}
-                type="button"
-                className={`template-card ${template.tone} ${selectedTemplate === index ? 'selected' : ''}`}
-                aria-pressed={selectedTemplate === index}
-                onClick={() => setSelectedTemplate(index)}
-              >
-                <span aria-hidden="true">{template.mark}</span>
-                <b>{template.label}</b>
-              </button>
-            ))}
+          <div className="template-grid" role="group" aria-label="Template placeholders">
+            <div className="template-slot" aria-hidden="true" />
+            <div className="template-slot" aria-hidden="true" />
+            <div className="template-slot" aria-hidden="true" />
+            <div className="template-slot" aria-hidden="true" />
+            <div className="template-slot" aria-hidden="true" />
           </div>
-          <p className="selection" aria-live="polite">
-            Selected: <strong>{templates[selectedTemplate].label}</strong>
-          </p>
         </section>
 
         <section className="powers candy-card" aria-labelledby="powers-title">
