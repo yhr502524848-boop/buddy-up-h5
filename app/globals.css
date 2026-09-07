@@ -981,6 +981,7 @@ button { color: inherit; font: inherit; }
   cursor: pointer;
 }
 .spacing-guide-toggle input { width: 20px; height: 20px; accent-color: var(--purple); }
+.spacing-guide-toggle.compact-toggle { margin-top: 0; }
 .spacing-panel-help {
   margin: 0 0 10px;
   color: rgba(40,20,94,.7);

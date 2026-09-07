@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent as ReactMouseEvent, type TouchEvent as ReactTouchEvent } from 'react';
 
 const defaultSpacing = {
   heroX: 10,
@@ -242,15 +242,69 @@ function SpacingDragHandle({
   value: number;
   onChange: (value: number) => void;
 }) {
-  const dragStart = useRef<{ pointerId: number; y: number; value: number } | null>(null);
+  const dragStart = useRef<
+    | { input: 'mouse'; y: number; value: number }
+    | { input: 'touch'; touchId: number; y: number; value: number }
+    | null
+  >(null);
+  const onChangeRef = useRef(onChange);
   const [dragging, setDragging] = useState(false);
   const top = -(value / 2 + 22);
+  onChangeRef.current = onChange;
 
-  const finishDrag = (event: PointerEvent<HTMLDivElement>) => {
-    if (dragStart.current?.pointerId !== event.pointerId) return;
-    dragStart.current = null;
-    setDragging(false);
-  };
+  useEffect(() => {
+    if (!dragging) return;
+
+    const updateFromY = (clientY: number) => {
+      const start = dragStart.current;
+      if (!start) return;
+      onChangeRef.current(start.value + Math.round((clientY - start.y) * 2));
+    };
+
+    const handleMouseMove = (event: globalThis.MouseEvent) => {
+      if (dragStart.current?.input !== 'mouse') return;
+      event.preventDefault();
+      updateFromY(event.clientY);
+    };
+
+    const handleMouseUp = () => {
+      if (dragStart.current?.input !== 'mouse') return;
+      dragStart.current = null;
+      setDragging(false);
+    };
+
+    const handleTouchMove = (event: globalThis.TouchEvent) => {
+      const start = dragStart.current;
+      if (start?.input !== 'touch') return;
+      const touch = Array.from(event.touches).find((item) => item.identifier === start.touchId);
+      if (!touch) return;
+      event.preventDefault();
+      updateFromY(touch.clientY);
+    };
+
+    const handleTouchEnd = (event: globalThis.TouchEvent) => {
+      const start = dragStart.current;
+      if (start?.input !== 'touch') return;
+      const stillActive = Array.from(event.touches).some((item) => item.identifier === start.touchId);
+      if (stillActive) return;
+      dragStart.current = null;
+      setDragging(false);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: false });
+    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd);
+    window.addEventListener('touchcancel', handleTouchEnd);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('touchcancel', handleTouchEnd);
+    };
+  }, [dragging]);
 
   const adjustWithKeyboard = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
@@ -270,22 +324,17 @@ function SpacingDragHandle({
       aria-valuemax={240}
       aria-valuenow={value}
       onKeyDown={adjustWithKeyboard}
-      onPointerDown={(event) => {
+      onMouseDown={(event: ReactMouseEvent<HTMLDivElement>) => {
         event.preventDefault();
-        event.currentTarget.setPointerCapture(event.pointerId);
-        dragStart.current = { pointerId: event.pointerId, y: event.clientY, value };
+        dragStart.current = { input: 'mouse', y: event.clientY, value };
         setDragging(true);
       }}
-      onPointerMove={(event) => {
-        const start = dragStart.current;
-        if (!start || start.pointerId !== event.pointerId) return;
-        onChange(start.value + Math.round((event.clientY - start.y) * 2));
-      }}
-      onPointerUp={finishDrag}
-      onPointerCancel={finishDrag}
-      onLostPointerCapture={() => {
-        dragStart.current = null;
-        setDragging(false);
+      onTouchStart={(event: ReactTouchEvent<HTMLDivElement>) => {
+        const touch = event.changedTouches[0];
+        if (!touch) return;
+        event.preventDefault();
+        dragStart.current = { input: 'touch', touchId: touch.identifier, y: touch.clientY, value };
+        setDragging(true);
       }}
     >
       <span className="spacing-drag-grip" aria-hidden="true"><i /><i /><i /></span>
@@ -298,6 +347,7 @@ function SpacingDragHandle({
 export default function Home() {
   const [joined, setJoined] = useState(false);
   const [panelOpen, setPanelOpen] = useState(false);
+  const [dragEditing, setDragEditing] = useState(false);
   const [showGuides, setShowGuides] = useState(true);
   const [copied, setCopied] = useState(false);
   const [spacing, setSpacing] = useState<SpacingState>({ ...defaultSpacing });
@@ -338,7 +388,7 @@ export default function Home() {
 
   return (
     <main
-      className={`${panelOpen ? 'spacing-editing' : ''} ${showGuides && panelOpen ? 'spacing-guides' : ''}`.trim()}
+      className={`${dragEditing ? 'spacing-editing' : ''} ${showGuides && dragEditing ? 'spacing-guides' : ''}`.trim()}
       style={spacingStyle}
     >
       <a className="skip-link" href="#content">Skip to content</a>
@@ -529,7 +579,12 @@ export default function Home() {
         type="button"
         aria-expanded={panelOpen}
         aria-controls="spacing-panel"
-        onClick={() => setPanelOpen((open) => !open)}
+        onClick={() => {
+          setPanelOpen((open) => {
+            if (!open) setDragEditing(true);
+            return !open;
+          });
+        }}
       >
         {panelOpen ? '收起面板' : '间距面板'}
       </button>
@@ -547,13 +602,22 @@ export default function Home() {
           <label className="spacing-guide-toggle">
             <input
               type="checkbox"
+              checked={dragEditing}
+              onChange={(event) => setDragEditing(event.target.checked)}
+            />
+            <span>启用页面拖拽手柄</span>
+          </label>
+
+          <label className="spacing-guide-toggle compact-toggle">
+            <input
+              type="checkbox"
               checked={showGuides}
               onChange={(event) => setShowGuides(event.target.checked)}
             />
             <span>显示板块边界与名称</span>
           </label>
 
-          <p className="spacing-panel-help">页面上的黄色手柄可上下拖动板块间距；面板数值用于精确微调。完成后点击“复制 CSS”发给我。</p>
+          <p className="spacing-panel-help">先点击“收起面板”，再拖动页面上的黄色手柄；面板数值用于精确微调。完成后点击“复制 CSS”发给我。</p>
 
           <div className="spacing-panel-groups">
             {spacingGroups.map((group) => (
