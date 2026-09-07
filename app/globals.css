@@ -798,12 +798,12 @@ button { color: inherit; font: inherit; }
 .finale {
   position: relative;
   z-index: 1;
-  min-height: 190px;
-  margin-top: 28px;
-  padding: 28px 34px;
+  min-height: 146px;
+  margin-top: 24px;
+  padding: 20px 28px;
   display: grid;
   grid-template-columns: auto 1fr auto;
-  gap: 22px;
+  gap: 16px;
   align-items: center;
   color: white;
   background: linear-gradient(135deg, #5726a0, #381274);
@@ -863,7 +863,7 @@ button { color: inherit; font: inherit; }
   .template-grid { grid-template-columns: repeat(2, 1fr); }
   .template-card:last-child { grid-column: 1 / -1; min-height: 145px; }
   .power-grid { grid-template-columns: 1fr; }
-  .finale { grid-template-columns: auto 1fr; padding: 25px 22px; }
+  .finale { grid-template-columns: auto 1fr; padding: 18px; }
   .finale .final-cta { display: none; }
   .mobile-join {
     position: fixed;
@@ -1117,10 +1117,10 @@ button { color: inherit; font: inherit; }
   }
 
   .finale {
-    min-height: 150px;
-    margin-top: 24px;
-    padding: 20px 16px;
-    gap: 14px;
+    min-height: 112px;
+    margin-top: 20px;
+    padding: 14px;
+    gap: 10px;
   }
   .finale p {
     margin-bottom: 4px;
