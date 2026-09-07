@@ -673,20 +673,20 @@ button { color: inherit; font: inherit; }
 }
 .reminder p { margin: 0; font-family: Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: var(--leading-body); }
 .reward-list li {
-  grid-template-columns: 76px 1fr;
-  gap: 17px;
-  min-height: 117px;
+  grid-template-columns: 44px 1fr;
+  gap: 12px;
+  min-height: 96px;
 }
 .reward-icon {
-  width: 70px;
-  height: 70px;
+  width: 35px;
+  height: 35px;
   display: grid;
   place-items: center;
   color: white;
   border: var(--stroke-main) solid var(--outline);
   border-radius: 50%;
-  box-shadow: 0 5px 0 rgba(75,23,111,.18), inset 0 5px 0 rgba(255,255,255,.3);
-  font-size: 22px;
+  box-shadow: 0 3px 0 rgba(75,23,111,.18), inset 0 3px 0 rgba(255,255,255,.3);
+  font-size: 14px;
   font-weight: 1000;
 }
 .reward-icon.yellow { color: var(--outline); }
@@ -1369,13 +1369,14 @@ button { color: inherit; font: inherit; }
     line-height: var(--leading-body);
   }
   .reward-list li {
-    grid-template-columns: 64px 1fr;
-    min-height: 96px;
+    grid-template-columns: 36px 1fr;
+    gap: 10px;
+    min-height: 80px;
   }
   .reward-icon {
-    width: 58px;
-    height: 58px;
-    font-size: 18px;
+    width: 29px;
+    height: 29px;
+    font-size: 12px;
     line-height: 1;
   }
 

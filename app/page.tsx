@@ -194,25 +194,25 @@ const spacingGroups: Array<{
 
 const rewards = [
   {
-    code: 'TB',
+    number: '1',
     title: 'Traffic Boost',
     text: 'Your first 2 posts with #buddyup receive official traffic support.',
     tone: 'coral',
   },
   {
-    code: 'FR',
+    number: '2',
     title: 'Limited-edition Frame',
     text: 'Publish 3 posts with 200 viewers each, with most viewers joining the gameplay.',
     tone: 'mint',
   },
   {
-    code: '1K',
+    number: '3',
     title: 'Up to 1000 Points',
     text: 'Create a trending post to earn up to 1000 points.',
     tone: 'yellow',
   },
   {
-    code: '★',
+    number: '4',
     title: 'Official Spotlight',
     text: 'Outstanding posts may become Loopit Picks or be featured by the official account.',
     tone: 'purple',
@@ -485,14 +485,14 @@ export default function Home() {
             />
             <span className="spacing-section-label" aria-hidden="true">Rewards</span>
             <div className="ribbon mint-ribbon"><h2 id="rewards-title">Rewards</h2></div>
-            <ul className="reward-list">
+            <ol className="reward-list">
               {rewards.map((reward) => (
                 <li key={reward.title}>
-                  <span className={`reward-icon ${reward.tone}`} aria-hidden="true">{reward.code}</span>
+                  <span className={`reward-icon ${reward.tone}`} aria-hidden="true">{reward.number}</span>
                   <span><b>{reward.title}</b>{reward.text}</span>
                 </li>
               ))}
-            </ul>
+            </ol>
           </section>
         </div>
 
