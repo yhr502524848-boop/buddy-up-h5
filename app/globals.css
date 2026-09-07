@@ -403,7 +403,7 @@ button { color: inherit; font: inherit; }
 .hero-copy h1 span,
 .hero-copy h1 strong {
   display: block;
-  -webkit-text-stroke: clamp(4px, .75vw, 7px) white;
+  -webkit-text-stroke: 8px white;
   paint-order: stroke fill;
   text-shadow: 2px 0 var(--outline), -2px 0 var(--outline), 0 2px var(--outline), 0 -2px var(--outline);
 }
