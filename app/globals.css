@@ -1160,12 +1160,12 @@ button { color: inherit; font: inherit; }
     font-variant-numeric: tabular-nums;
   }
 
-  .spacing-editing .event-shell { padding-top: var(--tune-content-top, 32px); }
-  .spacing-editing .two-column { margin-top: var(--tune-columns-top, 24px); }
-  .spacing-editing .showcase { margin-top: var(--tune-showcase-top, 32px); }
-  .spacing-editing .templates { margin-top: var(--tune-template-top, 32px); }
-  .spacing-editing .powers { margin-top: var(--tune-powers-top, 32px); }
-  .spacing-editing .finale { margin-top: var(--tune-finale-top, 20px); }
+  .spacing-editing .event-shell { padding-top: var(--tune-content-top, 0px); }
+  .spacing-editing .two-column { margin-top: var(--tune-columns-top, 40px); }
+  .spacing-editing .showcase { margin-top: var(--tune-showcase-top, 40px); }
+  .spacing-editing .templates { margin-top: var(--tune-template-top, 40px); }
+  .spacing-editing .powers { margin-top: var(--tune-powers-top, 40px); }
+  .spacing-editing .finale { margin-top: var(--tune-finale-top, 40px); }
 
   /* Join and Rewards are side by side on desktop, so there is no vertical gap to drag. */
   .spacing-editing .panel + .panel > .spacing-drag-handle { display: none; }
@@ -1370,7 +1370,7 @@ button { color: inherit; font: inherit; }
   }
 
   .event-shell {
-    padding: var(--tune-content-top, 32px) var(--tune-content-x, 16px) var(--tune-content-bottom, 104px);
+    padding: var(--tune-content-top, 0px) var(--tune-content-x, 16px) var(--tune-content-bottom, 104px);
   }
   .intro {
     gap: var(--tune-intro-gap, 16px);
@@ -1387,11 +1387,11 @@ button { color: inherit; font: inherit; }
   }
 
   .two-column {
-    margin-top: var(--tune-columns-top, 24px);
+    margin-top: var(--tune-columns-top, 40px);
     gap: var(--tune-columns-gap, 32px);
   }
   .panel {
-    padding: var(--tune-panel-top, 42px) var(--tune-panel-x, 16px) var(--tune-panel-bottom, 16px);
+    padding: var(--tune-panel-top, 1px) var(--tune-panel-x, 16px) var(--tune-panel-bottom, 16px);
   }
   .ribbon {
     top: -18px;
@@ -1456,15 +1456,15 @@ button { color: inherit; font: inherit; }
   }
 
   .showcase {
-    margin-top: var(--tune-showcase-top, 32px);
+    margin-top: var(--tune-showcase-top, 40px);
     padding: var(--tune-showcase-pad-top, 42px) var(--tune-showcase-x, 12px) var(--tune-showcase-bottom, 16px);
   }
   .templates {
-    margin-top: var(--tune-template-top, 32px);
+    margin-top: var(--tune-template-top, 40px);
     padding: var(--tune-template-pad-top, 42px) var(--tune-template-x, 12px) var(--tune-template-bottom, 16px);
   }
   .powers {
-    margin-top: var(--tune-powers-top, 32px);
+    margin-top: var(--tune-powers-top, 40px);
     padding: var(--tune-powers-pad-top, 42px) var(--tune-powers-x, 12px) var(--tune-powers-bottom, 16px);
   }
   .showcase-grid {
@@ -1527,7 +1527,7 @@ button { color: inherit; font: inherit; }
 
   .finale {
     min-height: var(--tune-finale-min-height, 112px);
-    margin-top: var(--tune-finale-top, 20px);
+    margin-top: var(--tune-finale-top, 40px);
     padding: var(--tune-finale-padding, 14px);
     gap: var(--tune-finale-gap, 10px);
   }
