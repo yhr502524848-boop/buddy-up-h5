@@ -594,7 +594,7 @@ export default function Home() {
           <header className="spacing-panel-header">
             <div>
               <strong>间距调整</strong>
-              <span>端内 H5 · 480px 以下</span>
+              <span>桌面与端内 H5</span>
             </div>
             <button type="button" aria-label="关闭间距面板" onClick={() => setPanelOpen(false)}>×</button>
           </header>
@@ -617,7 +617,7 @@ export default function Home() {
             <span>显示板块边界与名称</span>
           </label>
 
-          <p className="spacing-panel-help">先点击“收起面板”，再拖动页面上的黄色手柄；面板数值用于精确微调。完成后点击“复制 CSS”发给我。</p>
+          <p className="spacing-panel-help">先点击“收起面板”，再拖动页面上的黄色手柄；PC 与移动端都可调整。完成后点击“复制 CSS”发给我。</p>
 
           <div className="spacing-panel-groups">
             {spacingGroups.map((group) => (

@@ -1096,6 +1096,81 @@ button { color: inherit; font: inherit; }
 }
 .spacing-panel-actions .copy-spacing { color: white; background: var(--purple); }
 
+@media (min-width: 481px) {
+  .spacing-editing .spacing-drag-handle {
+    position: absolute;
+    left: 8px;
+    z-index: 85;
+    width: 164px;
+    min-height: 44px;
+    padding: 6px 8px;
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 6px;
+    color: var(--ink);
+    background: linear-gradient(180deg, #fff15a, var(--yellow));
+    border: var(--stroke-main) solid var(--outline);
+    border-radius: 12px;
+    box-shadow: 0 4px 0 rgba(75,23,111,.26), inset 0 2px 0 rgba(255,255,255,.58);
+    font-family: Arial, sans-serif;
+    cursor: ns-resize;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .spacing-editing .spacing-drag-handle:focus-visible {
+    outline: var(--stroke-main) solid white;
+    outline-offset: 3px;
+  }
+  .spacing-editing .spacing-drag-handle.is-dragging {
+    background: linear-gradient(180deg, #fff584, #ffd20c);
+    box-shadow: 0 2px 0 rgba(75,23,111,.28), inset 0 2px 0 rgba(255,255,255,.64);
+    transform: translateY(2px) scale(1.02);
+  }
+  .spacing-editing .spacing-drag-grip {
+    display: grid;
+    justify-content: center;
+    gap: 2px;
+  }
+  .spacing-editing .spacing-drag-grip i {
+    width: 13px;
+    height: 2px;
+    display: block;
+    background: var(--outline);
+    border-radius: 999px;
+  }
+  .spacing-editing .spacing-drag-handle b {
+    overflow: hidden;
+    font-size: 10px;
+    line-height: 1.15;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .spacing-editing .spacing-drag-handle output {
+    min-width: 36px;
+    padding: 4px 5px;
+    color: white;
+    background: var(--outline);
+    border-radius: 7px;
+    font-size: 9px;
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .spacing-editing .event-shell { padding-top: var(--tune-content-top, 32px); }
+  .spacing-editing .two-column { margin-top: var(--tune-columns-top, 24px); }
+  .spacing-editing .showcase { margin-top: var(--tune-showcase-top, 32px); }
+  .spacing-editing .templates { margin-top: var(--tune-template-top, 32px); }
+  .spacing-editing .powers { margin-top: var(--tune-powers-top, 32px); }
+  .spacing-editing .finale { margin-top: var(--tune-finale-top, 20px); }
+
+  /* Join and Rewards are side by side on desktop, so there is no vertical gap to drag. */
+  .spacing-editing .panel + .panel > .spacing-drag-handle { display: none; }
+}
+
 @media (max-width: 560px) {
   .hero { padding-inline: 10px; }
   .announcement { min-height: 78px; padding: 10px 57px; border-radius: 17px; }
