@@ -53,7 +53,7 @@ button { color: inherit; font: inherit; }
   isolation: isolate;
   min-height: 100svh;
   overflow: hidden;
-  padding: max(84px, calc(env(safe-area-inset-top) + 72px)) 16px 48px;
+  padding: max(16px, env(safe-area-inset-top)) 16px 42px;
   background: transparent;
 }
 .hero::before,
@@ -455,147 +455,6 @@ button { color: inherit; font: inherit; }
 .primary-cta:hover { filter: brightness(1.05); transform: translateY(-2px); }
 .primary-cta:active { transform: translateY(3px); }
 .primary-cta:focus-visible { outline: var(--stroke-main) solid white; outline-offset: 4px; }
-
-.hero-card-wrap {
-  position: relative;
-  width: min(760px, 100%);
-  margin: 0 auto;
-  filter: drop-shadow(0 22px 24px rgba(40,20,94,.22));
-}
-.hero-card {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  padding: 126px 18px 24px;
-  background:
-    radial-gradient(circle at 30% 22%, rgba(255,255,255,.28) 0 4%, transparent 30%),
-    linear-gradient(155deg, var(--purple-hi) 0%, var(--purple) 46%, #7541c9 100%);
-  border-radius: 54px 76px 42px 42px;
-  clip-path: polygon(0 16%, 45% 1.5%, 54% 2.5%, 65% 10%, 100% 19%, 100% 100%, 0 100%);
-  filter:
-    drop-shadow(2px 0 0 var(--outline))
-    drop-shadow(-2px 0 0 var(--outline))
-    drop-shadow(0 2px 0 var(--outline))
-    drop-shadow(0 -2px 0 var(--outline))
-    drop-shadow(0 12px 0 rgba(75,23,111,.24));
-}
-.hero-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  background:
-    linear-gradient(120deg, transparent 0 16%, rgba(255,255,255,.13) 16% 29%, transparent 29% 43%, rgba(255,255,255,.08) 43% 55%, transparent 55%),
-    radial-gradient(circle at 74% 12%, rgba(255,255,255,.25), transparent 23%);
-  pointer-events: none;
-}
-.hero-card::after {
-  content: "";
-  position: absolute;
-  inset: 5px;
-  z-index: 40;
-  border: 1px solid rgba(255,255,255,.28);
-  border-radius: 50px 72px 38px 38px;
-  clip-path: polygon(0 16%, 45% 1.5%, 54% 2.5%, 65% 10%, 100% 19%, 100% 100%, 0 100%);
-  pointer-events: none;
-}
-.hero-card-glow {
-  position: absolute;
-  top: 88px;
-  left: 8%;
-  right: 8%;
-  z-index: -1;
-  height: 220px;
-  background: radial-gradient(ellipse, rgba(255,255,255,.2), transparent 68%);
-  filter: blur(4px);
-  pointer-events: none;
-}
-.hero-tag-hole {
-  position: absolute;
-  top: 48px;
-  left: 51%;
-  z-index: 8;
-  width: 40px;
-  height: 40px;
-  background: var(--page-bg);
-  border: var(--stroke-main) solid rgba(255,255,255,.76);
-  border-radius: 50%;
-  box-shadow: inset 0 4px 7px rgba(40,20,94,.3), 0 2px 0 rgba(75,23,111,.28);
-  transform: translateX(-50%);
-}
-.hero-tag-cord {
-  position: absolute;
-  top: -70px;
-  left: 51%;
-  z-index: 12;
-  width: 210px;
-  height: 132px;
-  border: 7px solid transparent;
-  border-top-color: #ffe0ef;
-  border-left-color: var(--purple-hi);
-  border-radius: 52% 58% 40% 46%;
-  filter: drop-shadow(0 2px 0 rgba(75,23,111,.18));
-  transform: translateX(-7%) rotate(-19deg);
-  pointer-events: none;
-}
-.hero-tag-cord::after {
-  content: "";
-  position: absolute;
-  left: -14px;
-  bottom: 1px;
-  width: 8px;
-  height: 52px;
-  background: linear-gradient(var(--purple-hi), #ffe0ef);
-  border-radius: 999px;
-  transform: rotate(-15deg);
-}
-.hero-card .announcement {
-  position: relative;
-  z-index: 5;
-  width: min(92%, 680px);
-  box-shadow: 0 8px 18px rgba(75,23,111,.2), inset 0 3px 0 rgba(255,255,255,.6);
-}
-.hero-card .hero-copy {
-  min-height: 0;
-  padding-top: 28px;
-}
-.hero-card .hero-main-art {
-  width: clamp(300px, 52vw, 500px);
-  margin: -8px auto -12px;
-  filter: drop-shadow(0 10px 12px rgba(75,23,111,.18));
-}
-.hero-card .hero-copy h1 {
-  font-size: clamp(66px, 15vw, 118px);
-  filter: drop-shadow(0 6px 0 var(--outline));
-}
-.hero-card .hero-copy > p {
-  margin-top: 30px;
-  box-shadow: 0 7px 14px rgba(75,23,111,.2), inset 0 2px 0 rgba(255,255,255,.14);
-}
-.hero-card-action {
-  position: relative;
-  width: calc(100% - 8px);
-  margin-top: 22px;
-  padding: 24px 18px 10px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background: linear-gradient(180deg, rgba(255,255,255,.96), var(--cream));
-  border: var(--stroke-main) solid rgba(255,255,255,.92);
-  border-radius: 46% 46% 26px 26px / 28px 28px 26px 26px;
-  box-shadow: 0 -8px 24px rgba(255,255,255,.18), inset 0 4px 0 rgba(255,255,255,.9);
-}
-.hero-card-action::before {
-  content: "";
-  position: absolute;
-  top: 6px;
-  left: 12%;
-  right: 12%;
-  height: 22px;
-  background: radial-gradient(ellipse, rgba(214,155,255,.2), transparent 70%);
-  pointer-events: none;
-}
-.hero-card-action .primary-cta { width: min(420px, 100%); min-width: 0; }
 .confetti {
   position: absolute;
   z-index: 1;
@@ -1309,43 +1168,9 @@ button { color: inherit; font: inherit; }
   }
 
   .hero {
-    padding-top: max(76px, calc(env(safe-area-inset-top) + 64px));
     padding-inline: var(--tune-hero-x, 10px);
     padding-bottom: var(--tune-hero-bottom, 32px);
   }
-  .hero-card-wrap {
-    width: 100%;
-    filter: drop-shadow(0 16px 18px rgba(40,20,94,.2));
-  }
-  .hero-card {
-    padding: 118px 10px 16px;
-    border-radius: 36px 50px 30px 30px;
-    clip-path: polygon(0 15%, 44% 1.5%, 54% 2.5%, 66% 9%, 100% 17%, 100% 100%, 0 100%);
-    filter:
-      drop-shadow(2px 0 0 var(--outline))
-      drop-shadow(-2px 0 0 var(--outline))
-      drop-shadow(0 2px 0 var(--outline))
-      drop-shadow(0 -2px 0 var(--outline))
-      drop-shadow(0 9px 0 rgba(75,23,111,.22));
-  }
-  .hero-card::after {
-    inset: 4px;
-    border-radius: 32px 46px 26px 26px;
-    clip-path: polygon(0 15%, 44% 1.5%, 54% 2.5%, 66% 9%, 100% 17%, 100% 100%, 0 100%);
-  }
-  .hero-tag-hole {
-    top: 34px;
-    width: 34px;
-    height: 34px;
-  }
-  .hero-tag-cord {
-    top: -62px;
-    width: 176px;
-    height: 108px;
-    border-width: 6px;
-  }
-  .hero-tag-cord::after { height: 44px; }
-  .hero-card .announcement { width: 96%; }
   .announcement {
     min-height: 72px;
     padding: 8px 52px;
@@ -1371,7 +1196,7 @@ button { color: inherit; font: inherit; }
     font-size: 12px;
     line-height: 1;
   }
-  .hero-card .hero-copy {
+  .hero-copy {
     min-height: calc(100svh - 104px);
     padding-top: var(--tune-hero-copy-top, 40px);
   }
@@ -1402,24 +1227,6 @@ button { color: inherit; font: inherit; }
     gap: var(--tune-hero-button-gap, 10px);
     font-size: 18px;
     line-height: 1.2;
-  }
-  .hero-card .hero-copy {
-    min-height: 0;
-  }
-  .hero-card .hero-main-art {
-    width: min(88%, 320px);
-    margin: -8px auto -10px;
-  }
-  .hero-card .hero-copy h1 {
-    font-size: clamp(60px, 17vw, 72px);
-    line-height: .78;
-  }
-  .hero-card .hero-copy > p { margin-top: 26px; }
-  .hero-card-action {
-    width: calc(100% - 4px);
-    margin-top: 18px;
-    padding: 20px 12px 8px;
-    border-radius: 42% 42% 22px 22px / 24px 24px 22px 22px;
   }
 
   .event-shell {
