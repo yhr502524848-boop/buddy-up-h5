@@ -473,6 +473,15 @@ button { color: inherit; font: inherit; }
   background: var(--outline);
   box-shadow: 0 2px 0 rgba(75,23,111,.15);
 }
+.purple-chat-icon {
+  display: block;
+  width: 62px;
+  height: auto;
+  flex: 0 0 auto;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
 .scene-chat {
   position: absolute;
   right: 7px;

@@ -233,6 +233,20 @@ function ChatBubble({ color, className = '' }: { color: string; className?: stri
   );
 }
 
+function PurpleChatIcon({ className = '' }: { className?: string }) {
+  return (
+    <img
+      className={`purple-chat-icon ${className}`.trim()}
+      src="/buddy-purple-chat-bubble.png"
+      width={1354}
+      height={1162}
+      alt=""
+      aria-hidden="true"
+      draggable={false}
+    />
+  );
+}
+
 function SpacingDragHandle({
   label,
   value,
@@ -477,7 +491,7 @@ export default function Home() {
               ))}
             </ol>
             <div className="reminder">
-              <ChatBubble color="#fff" />
+              <PurpleChatIcon />
               <p>Don&apos;t forget to invite your friend via Messages to unlock rewards.</p>
             </div>
           </section>
@@ -543,7 +557,7 @@ export default function Home() {
           <div className="ribbon purple-ribbon"><h2 id="powers-title">Powers</h2></div>
           <div className="power-grid">
             <article className="invite-power">
-              <ChatBubble color="#a94fef" />
+              <PurpleChatIcon />
               <div><span>邀请 Player 2</span><b>Invite Player 2</b></div>
               <span className="plus-badge" aria-hidden="true">+</span>
             </article>
@@ -561,7 +575,7 @@ export default function Home() {
             onChange={(value) => setSpacingValue('finaleTop', value)}
           />
           <span className="spacing-section-label" aria-hidden="true">Finale</span>
-          <ChatBubble color="#a94fef" />
+          <PurpleChatIcon />
           <div>
             <p>Ready, buddy?</p>
             <h2 id="final-title">PLAY. MATCH. WIN.</h2>
