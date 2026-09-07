@@ -279,39 +279,49 @@ export default function Home() {
         <span className="spacing-section-label" aria-hidden="true">Hero</span>
         <div className="confetti confetti-a" />
         <div className="confetti confetti-b" />
-        <div className="announcement">
-          <div className="mini-megaphone" aria-hidden="true">
-            <i className="mega-cone" />
-            <i className="mega-rim" />
-            <i className="mega-handle" />
-            <i className="mega-shine" />
-          </div>
-          <div>
-            <p>MESSAGES IS NOW LIVE!</p>
-            <span>Go chat with your friends now!</span>
-          </div>
-          <div className="live-bubble" aria-hidden="true">
-            <span className="live-tail" />
-            <span className="live-dots"><i /><i /><i /></span>
-            <b>LIVE</b>
-          </div>
-        </div>
+        <div className="hero-card-wrap">
+          <span className="hero-tag-cord" aria-hidden="true" />
+          <article className="hero-card">
+            <span className="hero-card-glow" aria-hidden="true" />
+            <span className="hero-tag-hole" aria-hidden="true" />
 
-        <div className="hero-copy">
-          <img
-            className="hero-main-art"
-            src="/buddy-up-hero-chat.png"
-            width={1330}
-            height={758}
-            alt=""
-            aria-hidden="true"
-          />
-          <h1 id="hero-title"><span>BUDDY</span><strong>UP!</strong></h1>
-          <p>Make a game. Pick a buddy.<br />Play together.</p>
-          <time dateTime="2026-09-11/2026-09-25">SEP.11 — SEP.25</time>
-          <button className="primary-cta" type="button" onClick={join}>
-            JOIN NOW <span aria-hidden="true">→</span>
-          </button>
+            <div className="announcement">
+              <div className="mini-megaphone" aria-hidden="true">
+                <i className="mega-cone" />
+                <i className="mega-rim" />
+                <i className="mega-handle" />
+                <i className="mega-shine" />
+              </div>
+              <div>
+                <p>MESSAGES IS NOW LIVE!</p>
+                <span>Go chat with your friends now!</span>
+              </div>
+              <div className="live-bubble" aria-hidden="true">
+                <span className="live-tail" />
+                <span className="live-dots"><i /><i /><i /></span>
+                <b>LIVE</b>
+              </div>
+            </div>
+
+            <div className="hero-copy">
+              <img
+                className="hero-main-art"
+                src="/buddy-up-hero-chat.png"
+                width={1330}
+                height={758}
+                alt=""
+                aria-hidden="true"
+              />
+              <h1 id="hero-title"><span>BUDDY</span><strong>UP!</strong></h1>
+              <p>Make a game. Pick a buddy.<br />Play together.</p>
+              <div className="hero-card-action">
+                <time dateTime="2026-09-11/2026-09-25">SEP.11 — SEP.25</time>
+                <button className="primary-cta" type="button" onClick={join}>
+                  JOIN NOW <span aria-hidden="true">→</span>
+                </button>
+              </div>
+            </div>
+          </article>
         </div>
       </section>
 
