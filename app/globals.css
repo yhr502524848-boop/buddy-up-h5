@@ -837,6 +837,262 @@ button { color: inherit; font: inherit; }
   .toast { bottom: calc(78px + env(safe-area-inset-bottom)); }
 }
 
+/*
+ * In-app H5 type and spacing calibration.
+ * Reference artboard: 393px wide, 1x export.
+ */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .hero {
+    padding-inline: 10px;
+    padding-bottom: 32px;
+  }
+  .announcement {
+    min-height: 72px;
+    padding: 8px 52px;
+  }
+  .announcement p {
+    font-size: 18px;
+    line-height: 1.1;
+  }
+  .announcement span {
+    margin-top: 4px;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+  .mini-megaphone {
+    left: 5px;
+    transform: scale(.72) rotate(-9deg);
+  }
+  .live-bubble {
+    right: 2px;
+    transform: scale(.72);
+  }
+  .live-bubble b {
+    font-size: 12px;
+    line-height: 1;
+  }
+  .hero-copy {
+    min-height: calc(100svh - 104px);
+    padding-top: 40px;
+  }
+  .hero-copy h1 {
+    font-size: clamp(66px, 18vw, 78px);
+    line-height: .78;
+  }
+  .hero-copy p {
+    margin: 28px 0 12px;
+    padding: 8px 20px;
+    font-size: 16px;
+    line-height: 1.35;
+  }
+  .hero-copy time {
+    padding: 5px 18px;
+    font-size: 14px;
+    line-height: 1.2;
+  }
+  .primary-cta {
+    min-width: calc(100vw - 32px);
+    min-height: 52px;
+    margin-top: 20px;
+    gap: 10px;
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .event-shell {
+    padding: 32px 16px 104px;
+  }
+  .intro {
+    gap: 16px;
+    padding: 24px 16px 20px;
+  }
+  .eyebrow {
+    margin-bottom: 8px;
+    padding: 4px 10px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .intro h2 {
+    margin-bottom: 12px;
+    font-size: 24px;
+    line-height: 1.15;
+  }
+  .intro .section-copy > p:last-child {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .two-column {
+    margin-top: 24px;
+    gap: 32px;
+  }
+  .panel {
+    padding: 42px 16px 16px;
+  }
+  .ribbon {
+    top: -18px;
+    min-width: 180px;
+    min-height: 44px;
+    padding: 6px 20px;
+  }
+  .ribbon h2 {
+    font-size: 20px;
+    line-height: 1.1;
+  }
+  .step-list li,
+  .reward-list li {
+    min-height: 88px;
+    gap: 12px;
+  }
+  .step-list li {
+    grid-template-columns: 44px 64px 1fr;
+  }
+  .step-list li > span:last-child,
+  .reward-list li > span:last-child {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .step-list b,
+  .reward-list b {
+    margin-bottom: 2px;
+    font-size: 16px;
+    line-height: 1.2;
+  }
+  .number-badge {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+    line-height: 1;
+  }
+  .step-mark {
+    width: 60px;
+    height: 50px;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .reminder {
+    gap: 12px;
+    margin-top: 12px;
+    padding: 12px 14px;
+  }
+  .reminder p {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .reward-list li {
+    grid-template-columns: 64px 1fr;
+    min-height: 96px;
+  }
+  .reward-icon {
+    width: 58px;
+    height: 58px;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .showcase,
+  .templates,
+  .powers {
+    margin-top: 32px;
+    padding: 42px 12px 16px;
+  }
+  .showcase-grid {
+    gap: 12px;
+  }
+  .showcase-grid h3 {
+    margin: -8px 8px 8px;
+    padding: 8px;
+    font-size: 16px;
+    line-height: 1.25;
+  }
+  .template-hint {
+    margin-bottom: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .template-grid {
+    gap: 8px;
+  }
+  .template-card {
+    min-height: 144px;
+    padding: 8px 6px 9px;
+  }
+  .template-card:last-child {
+    min-height: 128px;
+  }
+  .template-card > span {
+    min-height: 72px;
+    font-size: 22px;
+    line-height: 1;
+  }
+  .template-card b {
+    min-height: 40px;
+    padding: 6px 4px;
+    font-size: 12px;
+    line-height: 1.25;
+  }
+  .selection {
+    margin-top: 16px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .powers {
+    padding-bottom: 16px;
+  }
+  .power-grid {
+    gap: 12px;
+  }
+  .power-grid article {
+    min-height: 88px;
+    gap: 12px;
+    padding: 12px 14px;
+  }
+  .power-grid article span {
+    font-size: 12px;
+    line-height: 1.35;
+  }
+  .power-grid article b {
+    font-size: 16px;
+    line-height: 1.2;
+  }
+
+  .finale {
+    min-height: 150px;
+    margin-top: 24px;
+    padding: 20px 16px;
+    gap: 14px;
+  }
+  .finale p {
+    margin-bottom: 4px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .finale h2 {
+    font-size: 26px;
+    line-height: 1.1;
+  }
+  .mobile-join {
+    padding: 8px 16px max(8px, env(safe-area-inset-bottom));
+  }
+  .mobile-join button {
+    min-height: 52px;
+    font-size: 16px;
+    line-height: 1.2;
+  }
+  .toast {
+    padding: 12px 16px;
+    gap: 8px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
