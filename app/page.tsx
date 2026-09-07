@@ -151,19 +151,10 @@ export default function Home() {
 
         <section className="showcase candy-card" aria-labelledby="showcase-title">
           <div className="ribbon purple-ribbon wide-ribbon"><h2 id="showcase-title">#buddyup Showcase</h2></div>
-          <div className="showcase-grid">
-            <article>
-              <div className="showcase-art clues" aria-hidden="true"><span>?</span><i /><i /><i /></div>
-              <h3>Solve It Together</h3>
-            </article>
-            <article>
-              <div className="showcase-art machine" aria-hidden="true"><span>○</span><i /><i /><i /><i /></div>
-              <h3>Gashapon Machine</h3>
-            </article>
-            <article>
-              <div className="showcase-art same-vibe" aria-hidden="true"><span>♥</span><i /><i /></div>
-              <h3>Same Vibe?</h3>
-            </article>
+          <div className="showcase-grid" role="group" aria-label="Showcase placeholders">
+            <div className="showcase-slot" aria-hidden="true" />
+            <div className="showcase-slot" aria-hidden="true" />
+            <div className="showcase-slot" aria-hidden="true" />
           </div>
         </section>
 
