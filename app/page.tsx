@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type CSSProperties } from 'react';
+import { useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent } from 'react';
 
 const defaultSpacing = {
   heroX: 10,
@@ -233,6 +233,68 @@ function ChatBubble({ color, className = '' }: { color: string; className?: stri
   );
 }
 
+function SpacingDragHandle({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  onChange: (value: number) => void;
+}) {
+  const dragStart = useRef<{ pointerId: number; y: number; value: number } | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const top = -(value / 2 + 22);
+
+  const finishDrag = (event: PointerEvent<HTMLDivElement>) => {
+    if (dragStart.current?.pointerId !== event.pointerId) return;
+    dragStart.current = null;
+    setDragging(false);
+  };
+
+  const adjustWithKeyboard = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
+    event.preventDefault();
+    const direction = event.key === 'ArrowDown' ? 1 : -1;
+    onChange(value + direction * (event.shiftKey ? 8 : 1));
+  };
+
+  return (
+    <div
+      className={`spacing-drag-handle ${dragging ? 'is-dragging' : ''}`}
+      style={{ top }}
+      role="slider"
+      tabIndex={0}
+      aria-label={`${label}，当前 ${value} 像素。上下拖动或使用方向键调整`}
+      aria-valuemin={0}
+      aria-valuemax={240}
+      aria-valuenow={value}
+      onKeyDown={adjustWithKeyboard}
+      onPointerDown={(event) => {
+        event.preventDefault();
+        event.currentTarget.setPointerCapture(event.pointerId);
+        dragStart.current = { pointerId: event.pointerId, y: event.clientY, value };
+        setDragging(true);
+      }}
+      onPointerMove={(event) => {
+        const start = dragStart.current;
+        if (!start || start.pointerId !== event.pointerId) return;
+        onChange(start.value + Math.round((event.clientY - start.y) * 2));
+      }}
+      onPointerUp={finishDrag}
+      onPointerCancel={finishDrag}
+      onLostPointerCapture={() => {
+        dragStart.current = null;
+        setDragging(false);
+      }}
+    >
+      <span className="spacing-drag-grip" aria-hidden="true"><i /><i /><i /></span>
+      <b>{label}</b>
+      <output>{value}px</output>
+    </div>
+  );
+}
+
 export default function Home() {
   const [joined, setJoined] = useState(false);
   const [panelOpen, setPanelOpen] = useState(false);
@@ -248,11 +310,14 @@ export default function Home() {
     .map((key) => `    ${spacingVariables[key]}: ${spacing[key]}px;`)
     .join('\n')}\n  }\n}`;
 
-  const updateSpacing = (key: SpacingKey, value: string) => {
-    const next = Number(value);
+  const setSpacingValue = (key: SpacingKey, next: number) => {
     if (!Number.isFinite(next)) return;
     setSpacing((current) => ({ ...current, [key]: Math.max(0, Math.min(240, next)) }));
     setCopied(false);
+  };
+
+  const updateSpacing = (key: SpacingKey, value: string) => {
+    setSpacingValue(key, Number(value));
   };
 
   const copySpacing = async () => {
@@ -272,7 +337,10 @@ export default function Home() {
   };
 
   return (
-    <main className={showGuides && panelOpen ? 'spacing-guides' : ''} style={spacingStyle}>
+    <main
+      className={`${panelOpen ? 'spacing-editing' : ''} ${showGuides && panelOpen ? 'spacing-guides' : ''}`.trim()}
+      style={spacingStyle}
+    >
       <a className="skip-link" href="#content">Skip to content</a>
 
       <section className="hero" aria-labelledby="hero-title" data-spacing-section="Hero">
@@ -317,6 +385,11 @@ export default function Home() {
 
       <div id="content" className="event-shell">
         <section className="intro candy-card" aria-labelledby="intro-title" data-spacing-section="Intro">
+          <SpacingDragHandle
+            label="Hero ↕ Intro"
+            value={spacing.contentTop}
+            onChange={(value) => setSpacingValue('contentTop', value)}
+          />
           <span className="spacing-section-label" aria-hidden="true">Intro</span>
           <div className="section-copy">
             <h2 id="intro-title">What is <span>Buddy Up?</span></h2>
@@ -331,6 +404,11 @@ export default function Home() {
         </section>
 
         <div className="two-column">
+          <SpacingDragHandle
+            label="Intro ↕ Join"
+            value={spacing.columnsTop}
+            onChange={(value) => setSpacingValue('columnsTop', value)}
+          />
           <section className="candy-card panel" aria-labelledby="join-title" data-spacing-section="How to Join">
             <span className="spacing-section-label" aria-hidden="true">How to Join</span>
             <div className="ribbon purple-ribbon"><h2 id="join-title">How to Join</h2></div>
@@ -350,6 +428,11 @@ export default function Home() {
           </section>
 
           <section className="candy-card panel" aria-labelledby="rewards-title" data-spacing-section="Rewards">
+            <SpacingDragHandle
+              label="Join ↕ Rewards"
+              value={spacing.columnsGap}
+              onChange={(value) => setSpacingValue('columnsGap', value)}
+            />
             <span className="spacing-section-label" aria-hidden="true">Rewards</span>
             <div className="ribbon mint-ribbon"><h2 id="rewards-title">Rewards</h2></div>
             <ul className="reward-list">
@@ -364,6 +447,11 @@ export default function Home() {
         </div>
 
         <section className="showcase candy-card" aria-labelledby="showcase-title" data-spacing-section="Showcase">
+          <SpacingDragHandle
+            label="Rewards ↕ Showcase"
+            value={spacing.showcaseTop}
+            onChange={(value) => setSpacingValue('showcaseTop', value)}
+          />
           <span className="spacing-section-label" aria-hidden="true">Showcase</span>
           <div className="ribbon purple-ribbon wide-ribbon"><h2 id="showcase-title">#buddyup Showcase</h2></div>
           <div className="showcase-grid" role="group" aria-label="Showcase placeholders">
@@ -374,6 +462,11 @@ export default function Home() {
         </section>
 
         <section id="templates" className="templates candy-card" aria-labelledby="templates-title" data-spacing-section="Template">
+          <SpacingDragHandle
+            label="Showcase ↕ Template"
+            value={spacing.templateTop}
+            onChange={(value) => setSpacingValue('templateTop', value)}
+          />
           <span className="spacing-section-label" aria-hidden="true">Template</span>
           <div className="ribbon mint-ribbon wide-ribbon"><h2 id="templates-title">Start With a Template</h2></div>
           <div className="template-grid" role="group" aria-label="Template placeholders">
@@ -386,6 +479,11 @@ export default function Home() {
         </section>
 
         <section className="powers candy-card" aria-labelledby="powers-title" data-spacing-section="Powers">
+          <SpacingDragHandle
+            label="Template ↕ Powers"
+            value={spacing.powersTop}
+            onChange={(value) => setSpacingValue('powersTop', value)}
+          />
           <span className="spacing-section-label" aria-hidden="true">Powers</span>
           <div className="ribbon purple-ribbon"><h2 id="powers-title">Powers</h2></div>
           <div className="power-grid">
@@ -402,6 +500,11 @@ export default function Home() {
         </section>
 
         <section className="finale" aria-labelledby="final-title" data-spacing-section="Finale">
+          <SpacingDragHandle
+            label="Powers ↕ Finale"
+            value={spacing.finaleTop}
+            onChange={(value) => setSpacingValue('finaleTop', value)}
+          />
           <span className="spacing-section-label" aria-hidden="true">Finale</span>
           <ChatBubble color="#a94fef" />
           <div>
@@ -450,7 +553,7 @@ export default function Home() {
             <span>显示板块边界与名称</span>
           </label>
 
-          <p className="spacing-panel-help">单位均为 px。修改会即时预览，完成后点击“复制 CSS”发给我。</p>
+          <p className="spacing-panel-help">页面上的黄色手柄可上下拖动板块间距；面板数值用于精确微调。完成后点击“复制 CSS”发给我。</p>
 
           <div className="spacing-panel-groups">
             {spacingGroups.map((group) => (
