@@ -3,52 +3,63 @@
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent as ReactMouseEvent, type TouchEvent as ReactTouchEvent } from 'react';
 
 const defaultSpacing = {
-  heroX: 10,
-  heroBottom: 32,
-  heroCopyTop: 40,
+  heroX: 16,
+  heroBottom: 8,
+  heroCopyTop: 56,
   contentTop: 0,
   contentX: 16,
   contentBottom: 104,
-  introTop: 24,
+  introTop: 16,
   introX: 16,
-  introBottom: 20,
-  introGap: 16,
+  introBottom: 12,
+  introGap: 8,
   columnsTop: 40,
   columnsGap: 32,
-  panelTop: 1,
+  panelTop: 24,
   panelX: 16,
   panelBottom: 16,
   listGap: 12,
   showcaseTop: 40,
-  showcasePadTop: 42,
+  showcasePadTop: 40,
   showcaseX: 12,
   showcaseBottom: 16,
   showcaseGap: 8,
   templateTop: 40,
-  templatePadTop: 42,
+  templatePadTop: 40,
   templateX: 12,
   templateBottom: 16,
   templateGap: 8,
   powersTop: 40,
-  powersPadTop: 42,
+  powersPadTop: 40,
   powersX: 12,
   powersBottom: 16,
   powersGap: 12,
   powerCardY: 12,
-  powerCardX: 14,
+  powerCardX: 16,
   powerCardGap: 12,
-  finaleTop: 40,
-  finalePadding: 14,
-  finaleGap: 10,
+  finaleTop: 4,
+  finalePadding: 16,
+  finaleGap: 12,
   finaleMinHeight: 112,
-  heroButtonTop: 20,
-  heroButtonHeight: 52,
-  heroButtonGap: 10,
   fixedButtonY: 8,
   fixedButtonX: 16,
   fixedButtonHeight: 52,
-  fixedButtonGap: 10,
+  fixedButtonGap: 8,
 };
+
+const defaultBackground = '#D9BDFF';
+const backgroundSwatches = [
+  '#9B68E3',
+  '#8F5ED9',
+  '#A875E8',
+  '#925FD2',
+  '#8251C7',
+  '#AA7AE8',
+  '#B284EE',
+  '#7F56C8',
+  '#9664DC',
+  '#A06BE6',
+];
 
 type SpacingKey = keyof typeof defaultSpacing;
 type SpacingState = Record<SpacingKey, number>;
@@ -92,9 +103,6 @@ const spacingVariables: Record<SpacingKey, string> = {
   finalePadding: '--tune-finale-padding',
   finaleGap: '--tune-finale-gap',
   finaleMinHeight: '--tune-finale-min-height',
-  heroButtonTop: '--tune-hero-button-top',
-  heroButtonHeight: '--tune-hero-button-height',
-  heroButtonGap: '--tune-hero-button-gap',
   fixedButtonY: '--tune-fixed-button-y',
   fixedButtonX: '--tune-fixed-button-x',
   fixedButtonHeight: '--tune-fixed-button-height',
@@ -181,9 +189,6 @@ const spacingGroups: Array<{
   {
     title: '按钮',
     controls: [
-      { key: 'heroButtonTop', label: '首屏按钮上距' },
-      { key: 'heroButtonHeight', label: '首屏按钮高度' },
-      { key: 'heroButtonGap', label: '首屏按钮图文' },
       { key: 'fixedButtonY', label: '底栏上下边距' },
       { key: 'fixedButtonX', label: '底栏左右边距' },
       { key: 'fixedButtonHeight', label: '底栏按钮高度' },
@@ -192,58 +197,213 @@ const spacingGroups: Array<{
   },
 ];
 
-const rewards = [
+type RewardIconName = 'boost' | 'frame' | 'points' | 'spotlight';
+type RewardIconStyleKey = 'a' | 'b' | 'c' | 'd';
+
+const rewards: Array<{ icon: RewardIconName; title: string; text: string; tone: string }> = [
   {
-    number: '1',
+    icon: 'boost',
     title: 'Traffic Boost',
     text: 'Your first 2 posts with #buddyup receive official traffic support.',
     tone: 'coral',
   },
   {
-    number: '2',
+    icon: 'frame',
     title: 'Limited-edition Frame',
     text: 'Publish 3 posts with 200 viewers each, with most viewers joining the gameplay.',
     tone: 'mint',
   },
   {
-    number: '3',
+    icon: 'points',
     title: 'Up to 1000 Points',
     text: 'Create a trending post to earn up to 1000 points.',
     tone: 'yellow',
   },
   {
-    number: '4',
+    icon: 'spotlight',
     title: 'Official Spotlight',
     text: 'Outstanding posts may become Loopit Picks or be featured by the official account.',
     tone: 'purple',
   },
 ];
 
-const steps = [
-  { number: '1', title: 'Create', text: 'Create a two-player game', mark: '+  +', tone: 'purple' },
-  { number: '2', title: 'Invite', text: 'Invite friends via Messages', mark: '•••', tone: 'mint' },
-  { number: '3', title: 'Play', text: 'Play together and see your match', mark: '♥', tone: 'coral' },
+const rewardIconStyles: Array<{ key: RewardIconStyleKey; name: string; description: string }> = [
+  { key: 'a', name: '果冻软糖', description: '不对称软糖轮廓，圆润饱满，最软萌、最接近 Q 版玩具。' },
+  { key: 'b', name: '爆闪贴纸', description: '圆角爆闪轮廓，节奏更活泼，奖励感和视觉冲击更强。' },
+  { key: 'c', name: '拼图玩具', description: '圆润拼图轮廓，呼应 Buddy Up 的组队与匹配主题。' },
+  { key: 'd', name: '聊天气泡', description: '胖胖的聊天气泡轮廓，更突出邀请好友和社交玩法。' },
 ];
 
-function ChatBubble({ color, className = '' }: { color: string; className?: string }) {
+const steps = [
+  { number: '1', title: 'Create', text: 'Create a two-player game', tone: 'purple' },
+  { number: '2', title: 'Invite', text: 'Invite friends via Messages', tone: 'mint' },
+  { number: '3', title: 'Play', text: 'Play together and see your match', tone: 'coral' },
+];
+
+function RewardGlyph({ name }: { name: RewardIconName }) {
   return (
-    <span className={`tiny-chat ${className}`} style={{ background: color }} aria-hidden="true">
-      <i /><i /><i />
+    <>
+      {name === 'boost' && (
+        <>
+          <path d="m4 17 5-5 4 4 7-8" />
+          <path d="M15 8h5v5" />
+        </>
+      )}
+      {name === 'frame' && (
+        <>
+          <rect x="4" y="4" width="16" height="16" rx="4" />
+          <circle cx="12" cy="10" r="2.5" />
+          <path d="M8 17c.8-2 2.2-3 4-3s3.2 1 4 3" />
+        </>
+      )}
+      {name === 'points' && (
+        <>
+          <circle cx="12" cy="12" r="8" />
+          <path d="m12 7.5 1.4 2.8 3.1.5-2.3 2.2.6 3.1-2.8-1.5-2.8 1.5.6-3.1-2.3-2.2 3.1-.5L12 7.5Z" />
+        </>
+      )}
+      {name === 'spotlight' && (
+        <>
+          <path d="m12 7 1.6 3.2 3.6.5-2.6 2.5.6 3.6-3.2-1.7-3.2 1.7.6-3.6-2.6-2.5 3.6-.5L12 7Z" />
+          <path d="M12 2v2M4.9 4.9l1.4 1.4M19.1 4.9l-1.4 1.4" />
+        </>
+      )}
+    </>
+  );
+}
+
+function RewardQIcon({ name, styleKey, tone }: { name: RewardIconName; styleKey: RewardIconStyleKey; tone: string }) {
+  const shapes: Record<RewardIconStyleKey, string> = {
+    a: 'M16 12c6-7 15-3 22-5 10-3 18 4 17 14-.5 6 4 11 1 18-3 7-11 7-16 13-5 6-14 4-19 0-6-4-15-4-16-13-1-7 5-11 5-17 0-4 2-8 6-10Z',
+    b: 'M32 4l7 9 11-2-1 11 9 6-8 8 4 10-11 3-3 11-9-7-9 7-3-11-11-3 4-10-8-8 9-6-1-11 11 2 7-9Z',
+    c: 'M14 8h12c-1 6 3 10 8 10s9-4 8-10h8a6 6 0 0 1 6 6v10c-6-1-10 3-10 8s4 9 10 8v10a6 6 0 0 1-6 6H42c1-6-3-10-8-10s-9 4-8 10H14a6 6 0 0 1-6-6V40c6 1 10-3 10-8s-4-9-10-8V14a6 6 0 0 1 6-6Z',
+    d: 'M32 7C17 7 7 15 7 28c0 8 5 15 13 19l-3 10 13-8h3c15 0 25-8 25-21S47 7 32 7Z',
+  };
+
+  return (
+    <span className={`reward-q-icon reward-q-${styleKey} ${tone}`} aria-hidden="true">
+      <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <path className="reward-q-sticker" d={shapes[styleKey]} />
+        <path className="reward-q-shape" d={shapes[styleKey]} />
+        <path className="reward-q-highlight" d="M17 19c5-5 11-7 17-6" />
+        <circle className="reward-q-spark" cx="46" cy="17" r="2.5" />
+        <g className="reward-q-glyph" transform="translate(16 16) scale(1.3333)">
+          <RewardGlyph name={name} />
+        </g>
+      </svg>
     </span>
   );
 }
 
 function PurpleChatIcon({ className = '' }: { className?: string }) {
   return (
-    <img
+    <svg
       className={`purple-chat-icon ${className}`.trim()}
-      src="/buddy-purple-chat-bubble.png"
-      width={1354}
-      height={1162}
-      alt=""
+      viewBox="0 0 120 112"
       aria-hidden="true"
-      draggable={false}
-    />
+      focusable="false"
+    >
+      <path
+        className="white-chat-body"
+        d="M60 8C29 8 8 25 8 51c0 16 9 29 25 36l-4 16c-.8 3.4 3 5.8 5.8 3.8L52 91h8c31 0 52-15 52-40S91 8 60 8Z"
+      />
+      <path className="white-chat-highlight" d="M25 35c7-11 20-16 35-16" />
+      <circle className="white-chat-dot" cx="44" cy="52" r="7" />
+      <circle className="white-chat-dot" cx="64" cy="52" r="7" />
+      <circle className="white-chat-dot" cx="84" cy="52" r="7" />
+    </svg>
+  );
+}
+
+function HeroTitleGraphic({ idPrefix, className = '' }: { idPrefix: string; className?: string }) {
+  const purpleGradient = `${idPrefix}-purple`;
+  const mintGradient = `${idPrefix}-mint`;
+
+  return (
+    <svg
+      className={`hero-title-art ${className}`.trim()}
+      viewBox="0 0 760 210"
+      role="img"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <defs>
+        <linearGradient id={purpleGradient} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#c874ff" />
+          <stop offset="1" stopColor="#8f3ddd" />
+        </linearGradient>
+        <linearGradient id={mintGradient} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#9bf3c6" />
+          <stop offset="1" stopColor="#55d992" />
+        </linearGradient>
+      </defs>
+      <g className="hero-title-word">
+        <text className="hero-title-outline" style={{ fill: `url(#${purpleGradient})` }} x="380" y="142" textAnchor="middle">buddyup!</text>
+        <text className="hero-title-bubble" style={{ fill: `url(#${purpleGradient})`, stroke: `url(#${purpleGradient})` }} x="380" y="142" textAnchor="middle">buddyup!</text>
+        <text className="hero-title-trim" x="380" y="142" textAnchor="middle">buddyup!</text>
+        <text className="hero-title-fill" x="380" y="142" textAnchor="middle">
+          <tspan className="hero-title-buddy">buddy</tspan><tspan className="hero-title-up" style={{ fill: `url(#${mintGradient})` }}>up!</tspan>
+        </text>
+        <path
+          className="hero-title-heart"
+          d="M676 91c-18-15-31-27-31-42 0-12 9-20 20-20 7 0 13 4 17 10 4-6 10-10 17-10 11 0 20 8 20 20 0 15-13 27-37 45z"
+        />
+      </g>
+    </svg>
+  );
+}
+
+function HeroADecorations() {
+  return (
+    <>
+      <i className="hero-spark hero-spark-one" /><i className="hero-spark hero-spark-two" />
+      <i className="hero-confetti hero-confetti-one" /><i className="hero-confetti hero-confetti-two" />
+      <i className="hero-confetti hero-confetti-three" /><i className="hero-confetti hero-confetti-four" />
+      <i className="hero-dot hero-dot-one" /><i className="hero-dot hero-dot-two" /><i className="hero-dot hero-dot-three" />
+      <svg className="hero-preview-puzzle hero-preview-puzzle-left" viewBox="0 0 64 64" focusable="false">
+        <path d="M14 8h12c-.8 5.5 3 10 8 10s8.8-4.5 8-10h8a6 6 0 0 1 6 6v10c-5.5-.8-10 3-10 8s4.5 8.8 10 8v10a6 6 0 0 1-6 6H42c.8-5.5-3-10-8-10s-8.8 4.5-8 10H14a6 6 0 0 1-6-6V40c5.5.8 10-3 10-8s-4.5-8.8-10-8V14a6 6 0 0 1 6-6Z" />
+      </svg>
+      <svg className="hero-preview-puzzle hero-preview-puzzle-right" viewBox="0 0 64 64" focusable="false">
+        <path d="M14 8h12c-.8 5.5 3 10 8 10s8.8-4.5 8-10h8a6 6 0 0 1 6 6v10c-5.5-.8-10 3-10 8s4.5 8.8 10 8v10a6 6 0 0 1-6 6H42c.8-5.5-3-10-8-10s-8.8 4.5-8 10H14a6 6 0 0 1-6-6V40c5.5.8 10-3 10-8s-4.5-8.8-10-8V14a6 6 0 0 1 6-6Z" />
+      </svg>
+      <i className="hero-color-block hero-color-block-one" /><i className="hero-color-block hero-color-block-two" />
+      <i className="hero-color-block hero-color-block-three" /><i className="hero-color-block hero-color-block-four" />
+    </>
+  );
+}
+
+function HeroPreviewArtwork({ variant }: { variant: 'a' | 'b' | 'c' }) {
+  return (
+    <div className={`hero-option-stage hero-option-stage-${variant}`}>
+      <div className="hero-option-decor" aria-hidden="true">
+        {variant === 'a' && (
+          <HeroADecorations />
+        )}
+        {variant === 'b' && (
+          <>
+            <svg className="hero-orbit" viewBox="0 0 420 260" focusable="false">
+              <path d="M44 136C62 45 172 16 276 42c78 20 121 78 100 139-18 52-86 75-157 66" />
+            </svg>
+            <i className="hero-mini-chat hero-mini-chat-purple"><b>•••</b></i>
+            <i className="hero-mini-chat hero-mini-chat-mint"><b>•••</b></i>
+            <i className="hero-orbit-heart" />
+          </>
+        )}
+        {variant === 'c' && (
+          <>
+            <i className="hero-game-sticker hero-game-sticker-two">2P</i>
+            <i className="hero-game-sticker hero-game-sticker-play">PLAY!</i>
+            <i className="hero-game-plus hero-game-plus-one">+</i>
+            <i className="hero-game-plus hero-game-plus-two">+</i>
+            <i className="hero-game-pill hero-game-pill-one" /><i className="hero-game-pill hero-game-pill-two" />
+          </>
+        )}
+      </div>
+      <img className="hero-option-chat" src="/buddy-up-hero-chat.png" width={1330} height={758} alt="" aria-hidden="true" />
+      <div className="hero-option-logo"><HeroTitleGraphic idPrefix={`hero-option-${variant}`} /></div>
+      <p>Make a game. Pick a buddy. Play together.</p>
+      <time>SEP.11 — SEP.25</time>
+    </div>
   );
 }
 
@@ -264,7 +424,10 @@ function SpacingDragHandle({
   const onChangeRef = useRef(onChange);
   const [dragging, setDragging] = useState(false);
   const top = -(value / 2 + 22);
-  onChangeRef.current = onChange;
+
+  useEffect(() => {
+    onChangeRef.current = onChange;
+  }, [onChange]);
 
   useEffect(() => {
     if (!dragging) return;
@@ -324,7 +487,7 @@ function SpacingDragHandle({
     if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
     event.preventDefault();
     const direction = event.key === 'ArrowDown' ? 1 : -1;
-    onChange(value + direction * (event.shiftKey ? 8 : 1));
+    onChange(value + direction * (event.shiftKey ? 8 : 4));
   };
 
   return (
@@ -361,22 +524,28 @@ function SpacingDragHandle({
 export default function Home() {
   const [joined, setJoined] = useState(false);
   const [panelOpen, setPanelOpen] = useState(false);
+  const [colorPanelOpen, setColorPanelOpen] = useState(false);
   const [dragEditing, setDragEditing] = useState(false);
   const [showGuides, setShowGuides] = useState(true);
   const [copied, setCopied] = useState(false);
+  const [colorCopied, setColorCopied] = useState(false);
+  const [backgroundColor, setBackgroundColor] = useState(defaultBackground);
   const [spacing, setSpacing] = useState<SpacingState>({ ...defaultSpacing });
 
   const spacingStyle = Object.fromEntries(
     (Object.keys(spacingVariables) as SpacingKey[]).map((key) => [spacingVariables[key], `${spacing[key]}px`]),
   ) as CSSProperties;
+  const pageStyle = { ...spacingStyle, '--page-bg': backgroundColor } as CSSProperties;
 
-  const cssCode = `@media (max-width: 480px) {\n  main {\n${(Object.keys(spacingVariables) as SpacingKey[])
+  const cssCode = `@media (max-width: 480px), (max-height: 480px) and (max-width: 780px) {\n  main {\n${(Object.keys(spacingVariables) as SpacingKey[])
     .map((key) => `    ${spacingVariables[key]}: ${spacing[key]}px;`)
     .join('\n')}\n  }\n}`;
 
   const setSpacingValue = (key: SpacingKey, next: number) => {
     if (!Number.isFinite(next)) return;
-    setSpacing((current) => ({ ...current, [key]: Math.max(0, Math.min(240, next)) }));
+    const step = key === 'heroBottom' ? 1 : 4;
+    const snapped = Math.round(next / step) * step;
+    setSpacing((current) => ({ ...current, [key]: Math.max(0, Math.min(240, snapped)) }));
     setCopied(false);
   };
 
@@ -394,6 +563,21 @@ export default function Home() {
     }
   };
 
+  const chooseBackground = (color: string) => {
+    setBackgroundColor(color.toUpperCase());
+    setColorCopied(false);
+  };
+
+  const copyBackgroundColor = async () => {
+    try {
+      await navigator.clipboard.writeText(backgroundColor.toUpperCase());
+      setColorCopied(true);
+      window.setTimeout(() => setColorCopied(false), 2200);
+    } catch {
+      setColorCopied(false);
+    }
+  };
+
   const join = () => {
     document.querySelector('#templates')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     setJoined(true);
@@ -403,14 +587,65 @@ export default function Home() {
   return (
     <main
       className={`${dragEditing ? 'spacing-editing' : ''} ${showGuides && dragEditing ? 'spacing-guides' : ''}`.trim()}
-      style={spacingStyle}
+      style={pageStyle}
     >
       <a className="skip-link" href="#content">Skip to content</a>
 
+      <section id="reward-icon-preview" className="hero-options-preview reward-icon-preview" aria-labelledby="reward-icon-preview-title">
+        <a className="hero-options-close" href="#" aria-label="关闭奖励图标预览">×</a>
+        <header className="hero-options-header">
+          <span>REWARD ICON OPTIONS</span>
+          <h2 id="reward-icon-preview-title">选择奖励图标样式</h2>
+          <p>四套方案都采用异形 Q 版轮廓、圆角粗描边和彩色高光，不使用圆形徽章底板。</p>
+        </header>
+        <div className="reward-icon-options-grid">
+          {rewardIconStyles.map((style) => (
+            <article className="reward-icon-option" key={style.key}>
+              <header><b>{style.key.toUpperCase()}</b><span>{style.name}</span></header>
+              <div className="reward-icon-option-stage" aria-label={`${style.name}图标组`}>
+                {rewards.map((reward) => (
+                  <RewardQIcon
+                    name={reward.icon}
+                    styleKey={style.key}
+                    tone={reward.tone}
+                    key={reward.title}
+                  />
+                ))}
+              </div>
+              <p>{style.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="hero-preview" className="hero-options-preview" aria-labelledby="hero-preview-title">
+        <a className="hero-options-close" href="#" aria-label="关闭头图方案预览">×</a>
+        <header className="hero-options-header">
+          <span>HEAD IMAGE OPTIONS</span>
+          <h2 id="hero-preview-title">选一个头图方向</h2>
+          <p>三种方案仅增加装饰元素，主图、标题、文案和日期均保持一致。</p>
+        </header>
+        <div className="hero-options-grid">
+          <article className="hero-option-card">
+            <header><b>A</b><span>糖果彩屑</span></header>
+            <HeroPreviewArtwork variant="a" />
+            <p>星芒、糖果条和彩色圆点，最活泼，氛围接近活动海报。</p>
+          </article>
+          <article className="hero-option-card">
+            <header><b>B</b><span>好友轨道</span></header>
+            <HeroPreviewArtwork variant="b" />
+            <p>虚线轨道串联双气泡与爱心，更突出“邀请好友一起玩”。</p>
+          </article>
+          <article className="hero-option-card">
+            <header><b>C</b><span>游戏贴纸</span></header>
+            <HeroPreviewArtwork variant="c" />
+            <p>加入 2P、PLAY! 和加号贴纸，游戏感最强，信息更聚焦。</p>
+          </article>
+        </div>
+      </section>
+
       <section className="hero" aria-labelledby="hero-title" data-spacing-section="Hero">
         <span className="spacing-section-label" aria-hidden="true">Hero</span>
-        <div className="confetti confetti-a" />
-        <div className="confetti confetti-b" />
         <div className="announcement">
           <img
             className="announcement-art announcement-megaphone"
@@ -434,21 +669,25 @@ export default function Home() {
           />
         </div>
 
-        <div className="hero-copy">
-          <img
-            className="hero-main-art"
-            src="/buddy-up-hero-chat.png"
-            width={1330}
-            height={758}
-            alt=""
-            aria-hidden="true"
-          />
-          <h1 id="hero-title"><span>BUDDY</span><strong>UP!</strong></h1>
-          <p>Make a game. Pick a buddy.<br />Play together.</p>
-          <time dateTime="2026-09-11/2026-09-25">SEP.11 — SEP.25</time>
-          <button className="primary-cta" type="button" onClick={join}>
-            JOIN NOW <span aria-hidden="true">→</span>
-          </button>
+        <div className="hero-copy hero-copy-a">
+          <div className="hero-a-stage">
+            <div className="hero-option-decor hero-main-decor" aria-hidden="true">
+              <HeroADecorations />
+            </div>
+            <img
+              className="hero-main-art"
+              src="/buddy-up-hero-chat.png"
+              width={1330}
+              height={758}
+              alt=""
+              aria-hidden="true"
+            />
+            <h1 id="hero-title" aria-label="Buddy Up!">
+              <HeroTitleGraphic idPrefix="hero-title" />
+            </h1>
+            <p>Make a game. Pick a buddy. Play together.</p>
+            <time dateTime="2026-09-11/2026-09-25">SEP.11 — SEP.25</time>
+          </div>
         </div>
       </section>
 
@@ -464,11 +703,15 @@ export default function Home() {
             <h2 id="intro-title">What is <span>Buddy Up?</span></h2>
             <p>Create a two-player game, invite your buddy via Messages, then play together to match—or see how well you match.</p>
           </div>
-          <div className="buddy-scene" aria-hidden="true">
-            <div className="phone phone-left"><span>♥</span></div>
-            <div className="connector">···</div>
-            <div className="phone phone-right"><span>♥</span></div>
-            <ChatBubble color="#ff6547" className="scene-chat" />
+          <div className="buddy-scene">
+            <img
+              className="buddy-scene-art"
+              src="/buddy-up-hero-chat.png"
+              width={1330}
+              height={758}
+              alt="Purple and mint chat bubbles joined by a yellow heart"
+              draggable={false}
+            />
           </div>
         </section>
 
@@ -485,7 +728,6 @@ export default function Home() {
               {steps.map((step) => (
                 <li key={step.number}>
                   <span className={`number-badge ${step.tone}`}>{step.number}</span>
-                  <span className={`step-mark ${step.tone}`} aria-hidden="true">{step.mark}</span>
                   <span><b>{step.title}</b>{step.text}</span>
                 </li>
               ))}
@@ -496,18 +738,21 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="candy-card panel" aria-labelledby="rewards-title" data-spacing-section="Rewards">
+          <section className="candy-card panel rewards-panel" aria-labelledby="rewards-title" data-spacing-section="Rewards">
             <SpacingDragHandle
               label="Join ↕ Rewards"
               value={spacing.columnsGap}
               onChange={(value) => setSpacingValue('columnsGap', value)}
             />
             <span className="spacing-section-label" aria-hidden="true">Rewards</span>
-            <div className="ribbon mint-ribbon"><h2 id="rewards-title">Rewards</h2></div>
+            <div className="ribbon rewards-ribbon">
+              <span className="rewards-ribbon-kicker">PRIZE DROP</span>
+              <h2 id="rewards-title">Rewards</h2>
+            </div>
             <ol className="reward-list">
               {rewards.map((reward) => (
                 <li key={reward.title}>
-                  <span className={`reward-icon ${reward.tone}`} aria-hidden="true">{reward.number}</span>
+                  <RewardQIcon name={reward.icon} styleKey="c" tone={reward.tone} />
                   <span><b>{reward.title}</b>{reward.text}</span>
                 </li>
               ))}
@@ -523,11 +768,15 @@ export default function Home() {
           />
           <span className="spacing-section-label" aria-hidden="true">Showcase</span>
           <div className="ribbon purple-ribbon wide-ribbon"><h2 id="showcase-title">#buddyup Showcase</h2></div>
-          <div className="showcase-grid" role="group" aria-label="Showcase placeholders">
+          <div className="showcase-grid" role="region" aria-label="Showcase, swipe horizontally to see more" tabIndex={0}>
+            <div className="showcase-slot" aria-hidden="true" />
+            <div className="showcase-slot" aria-hidden="true" />
+            <div className="showcase-slot" aria-hidden="true" />
             <div className="showcase-slot" aria-hidden="true" />
             <div className="showcase-slot" aria-hidden="true" />
             <div className="showcase-slot" aria-hidden="true" />
           </div>
+          <button className="showcase-cta" type="button">Go check out</button>
         </section>
 
         <section id="templates" className="templates candy-card" aria-labelledby="templates-title" data-spacing-section="Template">
@@ -538,7 +787,7 @@ export default function Home() {
           />
           <span className="spacing-section-label" aria-hidden="true">Template</span>
           <div className="ribbon mint-ribbon wide-ribbon"><h2 id="templates-title">Start With a Template</h2></div>
-          <div className="template-grid" role="group" aria-label="Template placeholders">
+          <div className="template-grid" role="region" aria-label="Templates, swipe horizontally to see more" tabIndex={0}>
             <div className="template-slot" aria-hidden="true" />
             <div className="template-slot" aria-hidden="true" />
             <div className="template-slot" aria-hidden="true" />
@@ -555,16 +804,9 @@ export default function Home() {
           />
           <span className="spacing-section-label" aria-hidden="true">Powers</span>
           <div className="ribbon purple-ribbon"><h2 id="powers-title">Powers</h2></div>
-          <div className="power-grid">
-            <article className="invite-power">
-              <PurpleChatIcon />
-              <div><span>邀请 Player 2</span><b>Invite Player 2</b></div>
-              <span className="plus-badge" aria-hidden="true">+</span>
-            </article>
-            <article className="match-power">
-              <span className="match-faces" aria-hidden="true"><i>♥</i><i>♥</i></span>
-              <div><span>匹配结果</span><b>Match Result</b></div>
-            </article>
+          <div className="power-grid" role="group" aria-label="Power placeholders">
+            <div className="power-slot" aria-hidden="true" />
+            <div className="power-slot" aria-hidden="true" />
           </div>
         </section>
 
@@ -580,12 +822,12 @@ export default function Home() {
             <p>Ready, buddy?</p>
             <h2 id="final-title">PLAY. MATCH. WIN.</h2>
           </div>
-          <button className="primary-cta final-cta" type="button" onClick={join}>JOIN NOW</button>
+          <button className="primary-cta final-cta" type="button" onClick={join}>JOIN NOW!</button>
         </section>
       </div>
 
       <div className="mobile-join">
-        <button type="button" onClick={join}>JOIN NOW <span aria-hidden="true">→</span></button>
+        <button type="button" onClick={join}>JOIN NOW!</button>
       </div>
 
       <div className={`toast ${joined ? 'show' : ''}`} role="status" aria-live="polite">
@@ -593,20 +835,53 @@ export default function Home() {
         Pick a template, invite a buddy, and start playing!
       </div>
 
-      <button
-        className="spacing-panel-trigger"
-        type="button"
-        aria-expanded={panelOpen}
-        aria-controls="spacing-panel"
-        onClick={() => {
-          setPanelOpen((open) => {
-            if (!open) setDragEditing(true);
-            return !open;
-          });
-        }}
-      >
-        {panelOpen ? '收起面板' : '间距面板'}
-      </button>
+      {colorPanelOpen && (
+        <aside id="background-color-panel" className="background-color-panel" aria-label="背景颜色选择面板">
+          <header className="background-color-header">
+            <div>
+              <strong>选择背景色</strong>
+              <span>实时预览，选好后复制色号发给我</span>
+            </div>
+            <button type="button" aria-label="关闭背景颜色面板" onClick={() => setColorPanelOpen(false)}>×</button>
+          </header>
+
+          <div className="background-color-current">
+            <label>
+              <input
+                type="color"
+                value={backgroundColor}
+                aria-label="打开系统取色器"
+                onChange={(event) => chooseBackground(event.target.value)}
+              />
+            </label>
+            <div>
+              <span>当前色号</span>
+              <output>{backgroundColor.toUpperCase()}</output>
+            </div>
+          </div>
+
+          <div className="background-color-swatches" role="group" aria-label="紫色背景预设">
+            {backgroundSwatches.map((color) => (
+              <button
+                key={color}
+                type="button"
+                className={backgroundColor === color ? 'selected' : ''}
+                style={{ background: color }}
+                aria-label={`选择背景色 ${color}`}
+                aria-pressed={backgroundColor === color}
+                onClick={() => chooseBackground(color)}
+              />
+            ))}
+          </div>
+
+          <div className="background-color-actions">
+            <button type="button" onClick={() => chooseBackground(defaultBackground)}>恢复原色</button>
+            <button className="copy-background-color" type="button" onClick={copyBackgroundColor}>
+              {colorCopied ? '已复制 ✓' : '复制色号'}
+            </button>
+          </div>
+        </aside>
+      )}
 
       {panelOpen && (
         <aside id="spacing-panel" className="spacing-panel" aria-label="H5 间距调整面板">
@@ -652,7 +927,7 @@ export default function Home() {
                           inputMode="numeric"
                           min="0"
                           max="240"
-                          step="1"
+                          step={control.key === 'heroBottom' ? 1 : 4}
                           value={spacing[control.key]}
                           onChange={(event) => updateSpacing(control.key, event.target.value)}
                         />
