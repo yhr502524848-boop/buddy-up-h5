@@ -8,11 +8,11 @@ const defaultSpacing = {
   heroCopyTop: 56,
   contentTop: 0,
   contentX: 16,
-  contentBottom: 104,
-  introTop: 16,
+  contentBottom: 72,
+  introTop: 20,
   introX: 16,
-  introBottom: 12,
-  introGap: 8,
+  introBottom: 20,
+  introGap: 0,
   columnsTop: 40,
   columnsGap: 32,
   panelTop: 24,
@@ -215,8 +215,8 @@ const rewards: Array<{ icon: RewardIconName; title: string; text: string; tone: 
   },
   {
     icon: 'points',
-    title: 'Up to 1000 Points',
-    text: 'Create a trending post to earn up to 1000 points.',
+    title: 'Up to 1000 Credits',
+    text: 'Create a trending post to earn up to 1000 credits.',
     tone: 'yellow',
   },
   {
@@ -239,6 +239,31 @@ const steps = [
   { number: '2', title: 'Invite', text: 'Invite friends via Messages', tone: 'mint' },
   { number: '3', title: 'Play', text: 'Play together and see your match', tone: 'coral' },
 ];
+
+function StepFlowIcon({ step }: { step: string }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      {step === '1' && (
+        <>
+          <path d="m15.5 5.5 3 3L9 18l-4 1 1-4 9.5-9.5Z" />
+          <path d="m13.5 7.5 3 3M6 15l3 3" />
+        </>
+      )}
+      {step === '2' && (
+        <>
+          <path d="M3 11 21 4l-7 16-3.5-6L3 11Z" />
+          <path d="m10.5 14 4-4" />
+        </>
+      )}
+      {step === '3' && (
+        <>
+          <path d="M7.5 8h9c2 0 3.4 1.2 4 3.7l.9 3.8c.5 2.1-1.8 3.5-3.4 2l-2.1-2H8.1l-2.1 2c-1.6 1.5-3.9.1-3.4-2l.9-3.8C4.1 9.2 5.5 8 7.5 8Z" />
+          <path d="M8 11v4M6 13h4M16.5 12h.01M18.5 14h.01" />
+        </>
+      )}
+    </svg>
+  );
+}
 
 function RewardGlyph({ name }: { name: RewardIconName }) {
   return (
@@ -401,8 +426,40 @@ function HeroPreviewArtwork({ variant }: { variant: 'a' | 'b' | 'c' }) {
       </div>
       <img className="hero-option-chat" src="/buddy-up-hero-chat.png" width={1330} height={758} alt="" aria-hidden="true" />
       <div className="hero-option-logo"><HeroTitleGraphic idPrefix={`hero-option-${variant}`} /></div>
-      <p>Make a game. Pick a buddy. Play together.</p>
+      <p>Create something fun. Invite a buddy. Have fun together.</p>
       <time>SEP.11 — SEP.25</time>
+    </div>
+  );
+}
+
+function AmbientFloaters({ region }: { region: 'hero' | 'content' }) {
+  const kinds = region === 'hero'
+    ? ['bubble', 'star', 'puzzle', 'star', 'bubble', 'puzzle']
+    : ['star', 'puzzle', 'bubble', 'star', 'puzzle'];
+
+  return (
+    <div className={`ambient-floaters ambient-floaters-${region}`} aria-hidden="true">
+      {kinds.map((kind, index) => (
+        <svg
+          className={`ambient-symbol ambient-${kind} ambient-${region}-${index + 1}`}
+          viewBox="0 0 64 64"
+          focusable="false"
+          key={`${region}-${kind}-${index}`}
+        >
+          {kind === 'bubble' && (
+            <>
+              <path d="M8 27C8 15 18 8 32 8s24 7 24 19-10 19-24 19h-4L16 56l3-13C12 40 8 34 8 27Z" />
+              <circle cx="24" cy="27" r="3" /><circle cx="32" cy="27" r="3" /><circle cx="40" cy="27" r="3" />
+            </>
+          )}
+          {kind === 'star' && (
+            <path d="M32 4c2 17 11 26 28 28-17 2-26 11-28 28-2-17-11-26-28-28C21 30 30 21 32 4Z" />
+          )}
+          {kind === 'puzzle' && (
+            <path d="M14 8h12c-1 6 3 10 8 10s9-4 8-10h8a6 6 0 0 1 6 6v10c-6-1-10 3-10 8s4 9 10 8v10a6 6 0 0 1-6 6H42c1-6-3-10-8-10s-9 4-8 10H14a6 6 0 0 1-6-6V40c6 1 10-3 10-8s-4-9-10-8V14a6 6 0 0 1 6-6Z" />
+          )}
+        </svg>
+      ))}
     </div>
   );
 }
@@ -645,6 +702,7 @@ export default function Home() {
       </section>
 
       <section className="hero" aria-labelledby="hero-title" data-spacing-section="Hero">
+        <AmbientFloaters region="hero" />
         <span className="spacing-section-label" aria-hidden="true">Hero</span>
         <div className="announcement">
           <img
@@ -675,6 +733,14 @@ export default function Home() {
               <HeroADecorations />
             </div>
             <img
+              className="hero-effects-overlay"
+              src="/buddy-up-hero-effects-v2.png"
+              width={1269}
+              height={1240}
+              alt=""
+              aria-hidden="true"
+            />
+            <img
               className="hero-main-art"
               src="/buddy-up-hero-chat.png"
               width={1330}
@@ -685,13 +751,14 @@ export default function Home() {
             <h1 id="hero-title" aria-label="Buddy Up!">
               <HeroTitleGraphic idPrefix="hero-title" />
             </h1>
-            <p>Make a game. Pick a buddy. Play together.</p>
+            <p>Create something fun. Invite a buddy. Have fun together.</p>
             <time dateTime="2026-09-11/2026-09-25">SEP.11 — SEP.25</time>
           </div>
         </div>
       </section>
 
       <div id="content" className="event-shell">
+        <AmbientFloaters region="content" />
         <section className="intro candy-card" aria-labelledby="intro-title" data-spacing-section="Intro">
           <SpacingDragHandle
             label="Hero ↕ Intro"
@@ -703,47 +770,15 @@ export default function Home() {
             <h2 id="intro-title">What is <span>Buddy Up?</span></h2>
             <p>Create a two-player game, invite your buddy via Messages, then play together to match—or see how well you match.</p>
           </div>
-          <div className="buddy-scene">
-            <img
-              className="buddy-scene-art"
-              src="/buddy-up-hero-chat.png"
-              width={1330}
-              height={758}
-              alt="Purple and mint chat bubbles joined by a yellow heart"
-              draggable={false}
-            />
-          </div>
         </section>
 
         <div className="two-column">
           <SpacingDragHandle
-            label="Intro ↕ Join"
+            label="Intro ↕ Rewards"
             value={spacing.columnsTop}
             onChange={(value) => setSpacingValue('columnsTop', value)}
           />
-          <section className="candy-card panel" aria-labelledby="join-title" data-spacing-section="How to Join">
-            <span className="spacing-section-label" aria-hidden="true">How to Join</span>
-            <div className="ribbon purple-ribbon"><h2 id="join-title">How to Join</h2></div>
-            <ol className="step-list">
-              {steps.map((step) => (
-                <li key={step.number}>
-                  <span className={`number-badge ${step.tone}`}>{step.number}</span>
-                  <span><b>{step.title}</b>{step.text}</span>
-                </li>
-              ))}
-            </ol>
-            <div className="reminder">
-              <PurpleChatIcon />
-              <p>Don&apos;t forget to invite your friend via Messages to unlock rewards.</p>
-            </div>
-          </section>
-
           <section className="candy-card panel rewards-panel" aria-labelledby="rewards-title" data-spacing-section="Rewards">
-            <SpacingDragHandle
-              label="Join ↕ Rewards"
-              value={spacing.columnsGap}
-              onChange={(value) => setSpacingValue('columnsGap', value)}
-            />
             <span className="spacing-section-label" aria-hidden="true">Rewards</span>
             <div className="ribbon rewards-ribbon">
               <span className="rewards-ribbon-kicker">PRIZE DROP</span>
@@ -758,11 +793,36 @@ export default function Home() {
               ))}
             </ol>
           </section>
+
+          <section className="candy-card panel join-panel" aria-labelledby="join-title" data-spacing-section="How to Join">
+            <SpacingDragHandle
+              label="Rewards ↕ Join"
+              value={spacing.columnsGap}
+              onChange={(value) => setSpacingValue('columnsGap', value)}
+            />
+            <span className="spacing-section-label" aria-hidden="true">How to Join</span>
+            <div className="ribbon purple-ribbon"><h2 id="join-title">How to Join</h2></div>
+            <ol className="step-flow">
+              {steps.map((step) => (
+                <li key={step.number}>
+                  <span className={`step-flow-icon ${step.tone}`}>
+                    <StepFlowIcon step={step.number} />
+                  </span>
+                  <b>{step.title}</b>
+                  <span>{step.text}</span>
+                </li>
+              ))}
+            </ol>
+            <div className="reminder">
+              <PurpleChatIcon />
+              <p>Don&apos;t forget to invite your friend via Messages to unlock rewards.</p>
+            </div>
+          </section>
         </div>
 
         <section className="showcase candy-card" aria-labelledby="showcase-title" data-spacing-section="Showcase">
           <SpacingDragHandle
-            label="Rewards ↕ Showcase"
+            label="Join ↕ Showcase"
             value={spacing.showcaseTop}
             onChange={(value) => setSpacingValue('showcaseTop', value)}
           />
