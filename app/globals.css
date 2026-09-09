@@ -483,23 +483,21 @@ button { color: inherit; font: inherit; }
   transform: translateY(-10px) rotate(-1deg);
 }
 .hero-copy-a .hero-a-stage > p {
-  left: 4%;
+  left: 8%;
   top: 66.45%;
-  width: 92%;
+  width: 84%;
   min-height: 10.70%;
   display: grid;
   place-items: center;
   margin: 0;
-  padding: 0 2.5cqw;
+  padding: 0 1cqw;
   color: white;
   background: linear-gradient(180deg, #6f38ba, var(--outline));
   border: var(--stroke-main) solid var(--outline);
   border-radius: var(--radius-control);
   box-shadow: inset 0 2px 0 rgba(255,255,255,.25), 0 4px 0 rgba(var(--shadow-rgb),.2);
-  font-size: clamp(9px, 2.75cqw, 22px);
+  font-size: 3.15cqw;
   line-height: 1.1;
-  text-align: center;
-  white-space: nowrap;
   transform: none;
 }
 .hero-copy-a .hero-a-stage > time {
@@ -2311,6 +2309,15 @@ button { color: inherit; font: inherit; }
   body {
     font-size: var(--type-14);
     line-height: var(--line-14);
+  }
+
+  .hero-copy-a .hero-a-stage > p {
+    left: 4%;
+    width: 92%;
+    padding-inline: 2.5cqw;
+    font-size: clamp(9px, 2.75cqw, 22px);
+    text-align: center;
+    white-space: nowrap;
   }
 
   .spacing-editing .spacing-drag-handle {
