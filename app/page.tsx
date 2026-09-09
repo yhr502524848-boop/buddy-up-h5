@@ -205,7 +205,7 @@ const rewards: Array<{ icon: RewardIconName; title: string; text: string; tone: 
     icon: 'boost',
     title: 'Traffic Boost',
     text: 'Your first 2 posts with #buddyup receive official traffic support.',
-    tone: 'coral',
+    tone: 'purple',
   },
   {
     icon: 'frame',
@@ -223,7 +223,7 @@ const rewards: Array<{ icon: RewardIconName; title: string; text: string; tone: 
     icon: 'spotlight',
     title: 'Official Spotlight',
     text: 'Outstanding posts may become Loopit Picks or be featured by the official account.',
-    tone: 'purple',
+    tone: 'coral',
   },
 ];
 
