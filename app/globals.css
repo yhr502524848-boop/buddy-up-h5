@@ -483,21 +483,23 @@ button { color: inherit; font: inherit; }
   transform: translateY(-10px) rotate(-1deg);
 }
 .hero-copy-a .hero-a-stage > p {
-  left: 8%;
+  left: 4%;
   top: 66.45%;
-  width: 84%;
+  width: 92%;
   min-height: 10.70%;
   display: grid;
   place-items: center;
   margin: 0;
-  padding: 0 1cqw;
+  padding: 0 2.5cqw;
   color: white;
   background: linear-gradient(180deg, #6f38ba, var(--outline));
   border: var(--stroke-main) solid var(--outline);
   border-radius: var(--radius-control);
   box-shadow: inset 0 2px 0 rgba(255,255,255,.25), 0 4px 0 rgba(var(--shadow-rgb),.2);
-  font-size: 3.15cqw;
+  font-size: clamp(9px, 2.75cqw, 22px);
   line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
   transform: none;
 }
 .hero-copy-a .hero-a-stage > time {
@@ -2690,6 +2692,17 @@ button { color: inherit; font: inherit; }
     gap: 8px;
     font-size: var(--type-13);
     line-height: var(--line-13);
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-copy-a .hero-a-stage > p {
+    top: 65.5%;
+    min-height: 13%;
+    padding: 1.5cqw 3cqw;
+    line-height: 1.15;
+    white-space: normal;
+    text-wrap: balance;
   }
 }
 
