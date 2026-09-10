@@ -20,17 +20,17 @@ const defaultSpacing = {
   panelBottom: 16,
   listGap: 12,
   showcaseTop: 40,
-  showcasePadTop: 40,
+  showcasePadTop: 24,
   showcaseX: 12,
   showcaseBottom: 16,
   showcaseGap: 8,
   templateTop: 40,
-  templatePadTop: 40,
+  templatePadTop: 24,
   templateX: 12,
   templateBottom: 16,
   templateGap: 8,
   powersTop: 40,
-  powersPadTop: 40,
+  powersPadTop: 24,
   powersX: 12,
   powersBottom: 16,
   powersGap: 12,
@@ -775,7 +775,7 @@ export default function Home() {
           />
           <section className="candy-card panel rewards-panel" aria-labelledby="rewards-title" data-spacing-section="Rewards">
             <span className="spacing-section-label" aria-hidden="true">Rewards</span>
-            <div className="ribbon rewards-ribbon">
+            <div className="section-title section-title-rewards">
               <span className="rewards-ribbon-kicker">PRIZE DROP</span>
               <h2 id="rewards-title">Rewards</h2>
             </div>
@@ -796,7 +796,7 @@ export default function Home() {
               onChange={(value) => setSpacingValue('columnsGap', value)}
             />
             <span className="spacing-section-label" aria-hidden="true">How to Join</span>
-            <div className="ribbon purple-ribbon"><h2 id="join-title">How to Join</h2></div>
+            <div className="section-title section-title-join"><h2 id="join-title">How to Join</h2></div>
             <ol className="step-flow">
               {steps.map((step) => (
                 <li key={step.number}>
@@ -822,7 +822,7 @@ export default function Home() {
             onChange={(value) => setSpacingValue('showcaseTop', value)}
           />
           <span className="spacing-section-label" aria-hidden="true">Showcase</span>
-          <div className="ribbon purple-ribbon wide-ribbon"><h2 id="showcase-title">#buddyup Showcase</h2></div>
+          <div className="section-title section-title-showcase"><h2 id="showcase-title"><span>#buddyup</span> Showcase</h2></div>
           <div className="showcase-grid" role="region" aria-label="Showcase, swipe horizontally to see more" tabIndex={0}>
             <div className="showcase-slot" aria-hidden="true" />
             <div className="showcase-slot" aria-hidden="true" />
@@ -841,7 +841,7 @@ export default function Home() {
             onChange={(value) => setSpacingValue('templateTop', value)}
           />
           <span className="spacing-section-label" aria-hidden="true">Template</span>
-          <div className="ribbon mint-ribbon wide-ribbon"><h2 id="templates-title">Start With a Template</h2></div>
+          <div className="section-title section-title-templates"><h2 id="templates-title">Start With a Template</h2></div>
           <div className="template-grid" role="region" aria-label="Templates, swipe horizontally to see more" tabIndex={0}>
             <div className="template-slot" aria-hidden="true" />
             <div className="template-slot" aria-hidden="true" />
@@ -858,7 +858,7 @@ export default function Home() {
             onChange={(value) => setSpacingValue('powersTop', value)}
           />
           <span className="spacing-section-label" aria-hidden="true">Powers</span>
-          <div className="ribbon purple-ribbon"><h2 id="powers-title">Powers</h2></div>
+          <div className="section-title section-title-powers"><h2 id="powers-title">Powers</h2></div>
           <div className="power-grid" role="group" aria-label="Power placeholders">
             <div className="power-slot" aria-hidden="true" />
             <div className="power-slot" aria-hidden="true" />
