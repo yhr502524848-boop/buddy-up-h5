@@ -342,7 +342,6 @@ function PurpleChatIcon({ className = '' }: { className?: string }) {
 
 function HeroTitleGraphic({ idPrefix, className = '' }: { idPrefix: string; className?: string }) {
   const purpleGradient = `${idPrefix}-purple`;
-  const mintGradient = `${idPrefix}-mint`;
 
   return (
     <svg
@@ -357,17 +356,13 @@ function HeroTitleGraphic({ idPrefix, className = '' }: { idPrefix: string; clas
           <stop offset="0" stopColor="#c874ff" />
           <stop offset="1" stopColor="#8f3ddd" />
         </linearGradient>
-        <linearGradient id={mintGradient} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#9bf3c6" />
-          <stop offset="1" stopColor="#55d992" />
-        </linearGradient>
       </defs>
       <g className="hero-title-word">
         <text className="hero-title-outline" style={{ fill: `url(#${purpleGradient})` }} x="380" y="142" textAnchor="middle">buddyup!</text>
         <text className="hero-title-bubble" style={{ fill: `url(#${purpleGradient})`, stroke: `url(#${purpleGradient})` }} x="380" y="142" textAnchor="middle">buddyup!</text>
         <text className="hero-title-trim" x="380" y="142" textAnchor="middle">buddyup!</text>
         <text className="hero-title-fill" x="380" y="142" textAnchor="middle">
-          <tspan className="hero-title-buddy">buddy</tspan><tspan className="hero-title-up" style={{ fill: `url(#${mintGradient})` }}>up!</tspan>
+          <tspan className="hero-title-buddy">buddy</tspan><tspan className="hero-title-up">up!</tspan>
         </text>
         <path
           className="hero-title-heart"

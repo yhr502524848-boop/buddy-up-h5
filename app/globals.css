@@ -44,19 +44,27 @@
   --stroke-secondary: 1.5px;
   --stroke-main: 2px;
   --stroke-heavy: 2.5px;
+  --h5-canvas-width: 393px;
 }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
+  overflow-x: hidden;
   background: var(--page-bg);
   color: var(--ink);
   font-family: "Arial Rounded MT Bold", "Trebuchet MS", Arial, sans-serif;
   font-size: var(--type-14);
   line-height: var(--line-14);
 }
-main { background: var(--page-bg); }
+main {
+  width: min(100%, var(--h5-canvas-width));
+  min-height: 100dvh;
+  margin-inline: auto;
+  overflow-x: hidden;
+  background: var(--page-bg);
+}
 a { color: inherit; }
 button { color: inherit; font: inherit; }
 .skip-link {
@@ -452,7 +460,7 @@ button { color: inherit; font: inherit; }
   stroke-width: 9px;
 }
 .hero-title-buddy { fill: var(--page-bg); }
-.hero-title-up { fill: url(#hero-title-mint); }
+.hero-title-up { fill: var(--mint); }
 .hero-title-heart {
   fill: var(--yellow);
   stroke: var(--outline);
@@ -483,21 +491,31 @@ button { color: inherit; font: inherit; }
   transform: translateY(-10px) rotate(-1deg);
 }
 .hero-copy-a .hero-a-stage > p {
-  left: 8%;
-  top: 66.45%;
-  width: 84%;
-  min-height: 10.70%;
+  left: 4%;
+  top: 65.2%;
+  width: 92%;
+  min-height: 12%;
   display: grid;
   place-items: center;
   margin: 0;
-  padding: 0 1cqw;
+  padding: 0 2cqw;
   color: white;
-  background: linear-gradient(180deg, #6f38ba, var(--outline));
-  border: var(--stroke-main) solid var(--outline);
-  border-radius: var(--radius-control);
-  box-shadow: inset 0 2px 0 rgba(255,255,255,.25), 0 4px 0 rgba(var(--shadow-rgb),.2);
-  font-size: 3.15cqw;
-  line-height: 1.1;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  font-family: "Cooper Black", "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+  font-size: clamp(15px, 4cqw, 18px);
+  line-height: 1.15;
+  letter-spacing: -.025em;
+  text-align: center;
+  white-space: normal;
+  text-wrap: balance;
+  -webkit-text-stroke: 1.25px var(--outline);
+  paint-order: stroke fill;
+  text-shadow:
+    1px 0 var(--outline), -1px 0 var(--outline),
+    0 1px var(--outline), 0 -1px var(--outline);
   transform: none;
 }
 .hero-copy-a .hero-a-stage > time {
@@ -2235,7 +2253,8 @@ button { color: inherit; font: inherit; }
   .spacing-editing .panel + .panel > .spacing-drag-handle { display: none; }
 }
 
-@media (max-width: 560px) {
+/* Keep the public H5 in its approved mobile composition on every device. */
+@media (min-width: 0) {
   .hero { padding-inline: 16px; }
   .announcement { min-height: 80px; padding: 12px 56px; border-radius: var(--radius-module); }
   .announcement p { line-height: var(--line-18); }
@@ -2244,7 +2263,7 @@ button { color: inherit; font: inherit; }
   .puzzle { width: 56px; height: 56px; font-size: 48px; }
 }
 
-@media (max-width: 780px) {
+@media (min-width: 0) {
   .event-shell { padding-inline: 12px; }
   .intro { grid-template-columns: 1fr; gap: 0; padding: 28px 24px; text-align: center; }
   .intro .section-copy > p:last-child { font-size: var(--type-16); line-height: var(--line-16); }
@@ -2258,14 +2277,16 @@ button { color: inherit; font: inherit; }
   .finale .final-cta { display: none; }
   .mobile-join {
     position: fixed;
-    left: 0;
-    right: 0;
+    left: 50%;
+    right: auto;
     bottom: 0;
     z-index: 30;
+    width: min(100%, var(--h5-canvas-width));
     display: block;
     padding: 8px 16px max(8px, env(safe-area-inset-bottom));
     background: rgba(75,23,111,.92);
     backdrop-filter: blur(8px);
+    transform: translateX(-50%);
   }
   .mobile-join button {
     width: min(500px, 100%);
@@ -2305,19 +2326,10 @@ button { color: inherit; font: inherit; }
  * In-app H5 type and spacing calibration.
  * Reference artboard: 393px wide, 1x export.
  */
-@media (max-width: 480px), (max-height: 480px) and (max-width: 780px) {
+@media (min-width: 0) {
   body {
     font-size: var(--type-14);
     line-height: var(--line-14);
-  }
-
-  .hero-copy-a .hero-a-stage > p {
-    left: 4%;
-    width: 92%;
-    padding-inline: 2.5cqw;
-    font-size: clamp(9px, 2.75cqw, 22px);
-    text-align: center;
-    white-space: nowrap;
   }
 
   .spacing-editing .spacing-drag-handle {
